@@ -1,0 +1,30 @@
+@startuml
+package Plateau{
+    class "Case" as case{
+        - boolean blanc
+        - boolean noir
+        + Case()
+        + Case(boolean blanc, boolean noir)
+        + void setBlanc()
+        + void setNoir()
+        + void inverser()
+    }
+
+    class "Plateau" as plateau{
+        - nbPiontBlanc
+        - nbPiontNoir
+        + Plateau()
+        + getNbPiontBlanc()
+        + getNbPiontNoir()
+        + majNbPiont()
+    }
+
+    class "Etat" as etat{
+        + Etat(Plateau p)
+        + void afficher()
+    }
+}
+
+plateau -- "*" case
+etat -- "1" plateau
+@enduml

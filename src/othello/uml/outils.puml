@@ -1,0 +1,12 @@
+@startuml
+package Outils{
+    class FabriquePlateau{
+        + static void getPlateauVide()
+        + static void getNouveauPlateau()
+    }
+
+    class "Affichage" as affichage{
+        + static void Afficher(Etat e)
+    }
+}
+@enduml

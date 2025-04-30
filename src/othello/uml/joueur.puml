@@ -1,0 +1,12 @@
+@startuml
+package Joueur{
+    abstract class "Joueur" as joueur{}
+
+    class "JoueurHumain" as joueurHumain{}
+
+    class "JoueurIA" as joueurIA{}
+
+    joueurHumain -up-> joueur
+    joueurIA -up-> joueur
+}
+@enduml
