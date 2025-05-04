@@ -20,6 +20,8 @@ package Plateau{
     }
 
     class "Etat" as etat{
+        - Plateau
+        + Etat ()
         + Etat(Plateau p)
         + void afficher()
     }
