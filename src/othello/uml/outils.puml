@@ -1,8 +1,8 @@
 @startuml
 package Outils{
     class FabriquePlateau{
-        + static void getPlateauVide()
-        + static void getNouveauPlateau()
+        + static Case[][] getPlateauVide()
+        + static Case[][] getPlateauOthello()
     }
 
     class "Affichage" as affichage{
