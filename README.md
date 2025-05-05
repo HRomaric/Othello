@@ -1,2 +1,4 @@
-# Othello
-Othello
+# othello
+othello
+
+work in progress

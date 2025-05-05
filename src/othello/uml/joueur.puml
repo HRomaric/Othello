@@ -1,8 +1,16 @@
 @startuml
 package Joueur{
-    abstract class "Joueur" as joueur{}
+    abstract class "Joueur" as joueur{
+        - boolean couleur
+        + Joueur(boolean couleur)
+        + boolean estBlanc()
+        + boolean estNoir()
+        + abstract void jouer()
+    }
 
-    class "JoueurHumain" as joueurHumain{}
+    class "JoueurHumain" as joueurHumain{
+        + void demanderCoup()
+    }
 
     class "JoueurIA" as joueurIA{}
 

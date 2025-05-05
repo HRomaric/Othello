@@ -37,8 +37,7 @@ public class Etat {
 
 
 
-
-
-
-
+    public Plateau getPlateau() {
+        return plateau;
+    }
 }
