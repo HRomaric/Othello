@@ -1,8 +1,8 @@
 package othello.plateau;
 
 public class Case {
-    private boolean pionNoir; //dit si sur la case il y a un pion blanc
-    private boolean pionBlanc; //dit si sur la case il y a un pion noir
+    private boolean pionNoir ;
+    private boolean pionBlanc ;
 
 
     /**
@@ -51,4 +51,12 @@ public class Case {
         pionNoir = false;
         pionBlanc = true;
     }
+
+
+    public boolean estVide(){
+        return !pionBlanc&& !pionNoir ;
+    }
+
+
+
 }
