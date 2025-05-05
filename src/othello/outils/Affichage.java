@@ -5,6 +5,10 @@ import othello.plateau.Etat;
 import othello.plateau.Plateau;
 
 public class Affichage {
+    /**
+     * Procédure qui affiche un plateau
+     * @param e - Etat
+     */
     public static void afficher(Etat e) {
         StringBuilder sb = new StringBuilder();
         Case[][] p = e.getPlateau().getPlateauDeJeu();

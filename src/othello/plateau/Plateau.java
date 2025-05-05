@@ -3,32 +3,48 @@ package othello.plateau;
 import othello.outils.FabriquePlateau;
 
 public class Plateau {
-    private Case [][] plateauDeJeu;
-    private int nbPiontBlanc;
-    private int nbPiontNoir;
+    private Case [][] plateauDeJeu; // Tableau de case -> représente le plateau de jeu
+    private int nbPiontBlanc; // Nombre de pion blanc
+    private int nbPiontNoir; //Nombre de pion noir
 
 
-
+    /**
+     * Constructeur du plateau
+     */
     public Plateau() {
         plateauDeJeu = FabriquePlateau.getPlateauOthello();
     }
 
 
 
+    /**
+     * Getteur du tableau de case
+     * @return plateauDeJeu - Case[][]
+     */
     public Case[][] getPlateauDeJeu() {
         return plateauDeJeu;
     }
 
+    /**
+     * Getteur du nombre de pion blanc
+     * @return nbPiontBlanc - int
+     */
     public int getNbPiontBlanc(){
         return nbPiontBlanc;
     }
 
+    /**
+     * Getteur du nombre de pion noir
+     * @return nbPiontNoir - int
+     */
     public int getNbPiontNoir(){
         return nbPiontNoir;
     }
 
 
-
+    /**
+     * Fonction qui recompte le nombre de pions blanc et noir
+     */
     public void majNbPiont(){
         nbPiontBlanc = 0;
         nbPiontNoir = 0;
