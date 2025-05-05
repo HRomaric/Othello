@@ -16,6 +16,7 @@ package Plateau{
         + Plateau()
         + getNbPiontBlanc()
         + getNbPiontNoir()
+        + getPlateau()
         + majNbPiont()
     }
 
