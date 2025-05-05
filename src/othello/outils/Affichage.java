@@ -1,12 +1,13 @@
 package othello.outils;
 
 import othello.plateau.Case;
+import othello.plateau.Etat;
 import othello.plateau.Plateau;
 
 public class Affichage {
-    public static void afficher(Plateau plateau) {
+    public static void afficher(Etat e) {
         StringBuilder sb = new StringBuilder();
-        Case[][] p = plateau.getPlateauDeJeu();
+        Case[][] p = e.getPlateau().getPlateauDeJeu();
 
         sb.append("#############################################\n");
         sb.append("######  1   2   3   4   5   6   7   8  ######\n");
