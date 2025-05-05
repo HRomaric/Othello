@@ -10,12 +10,12 @@ public class Case {
     }
 
     public void setPionNoir(){
-        if (pionBlanc) pionBlanc = false;
+        pionBlanc = false;
         pionNoir = true;
     }
 
     public void setPionBlanc(){
-        if (pionNoir) pionNoir = false;
+        pionNoir = false;
         pionBlanc = true;
     }
 
