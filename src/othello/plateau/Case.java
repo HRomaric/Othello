@@ -27,4 +27,11 @@ public class Case {
     public boolean isPionBlanc() {
         return pionBlanc;
     }
+
+    public boolean estVide(){
+        return !pionBlanc&& !pionNoir ;
+    }
+
+
+
 }
