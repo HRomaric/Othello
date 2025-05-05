@@ -9,6 +9,8 @@ package Joueur{
     }
 
     class "JoueurHumain" as joueurHumain{
+        + JoueurHumain(boolean couleur)
+        + void jouer()
         + void demanderCoup()
     }
 
