@@ -97,6 +97,30 @@ public class Plateau {
 
 
     public boolean coupPourNoir(int l, int c){
+        // voisin droit et diagonale sens droit
+        if (c<7){
+            if (plateauDeJeu[l][c+1].isPionBlanc() && verificationDirectionnel(l,c,0,1, "Noir")){
+                return true ;
+            }
+        }
+        // voisin gauche et diagonale sens gauche
+        if (c>0){
+            if (plateauDeJeu[l][c-1].isPionBlanc() && verificationDirectionnel(l,c,0,-1, "Noir")){
+                return true ;
+            }
+        }
+        // voisin haut
+        if (l>0){
+            if (plateauDeJeu[l-1][c].isPionBlanc() && verificationDirectionnel(l,c,-1,0, "Noir")){
+                return true ;
+            }
+        }
+        // voisin bas
+        if (l<7){
+            if (plateauDeJeu[l+1][c].isPionBlanc() && verificationDirectionnel(l,c,1,0, "Noir")){
+                return true ;
+            }
+        }
         return false;
     }
 
