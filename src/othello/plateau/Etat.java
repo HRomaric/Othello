@@ -1,10 +1,13 @@
 package othello.plateau;
 
+import java.util.ArrayList;
+
 public class Etat {
     private Plateau plateau; //Le plateau de jeu
     private boolean etatInitial; //dit si on est l'état initial
     private boolean etatFinal; //dit si on est un état final / échec
     private boolean joueurCourant; // false joueurNoir true joueurBlanc
+    private ArrayList<Etat> successeursValide ;
 
     /**
      * Constructeur Etat initial
@@ -43,7 +46,9 @@ public class Etat {
 
     }
 
-
+    public boolean joueurQuiJoue(){
+        return this.joueurCourant;
+    }
 
 
 
@@ -63,7 +68,15 @@ public class Etat {
      * Getteur du champ etatFinal
      * @return etatFinal - boolean
      */
-    public boolean getEtatFinal() {
+    public boolean estEtatFinal() {
         return etatFinal;
+    }
+
+    public String getJoueurGagnant() {
+        if (getPlateau().getNbPiontBlanc()> getPlateau().getNbPiontNoir()){
+            return "Blanc";
+        } else {
+            return "Noir";
+        }
     }
 }
