@@ -63,30 +63,15 @@ public class Plateau {
     }
 
     public boolean coupPourBlanc(int l, int c){
-        // vérification horizontal
-        if (c<8){
-            if (plateauDeJeu[l][c+1].isPionNoir()){
-                for (int cpt = c+2 ; cpt<8;cpt++){
-                    if (plateauDeJeu[l][cpt].isPionBlanc()){
-                        return true;
-                    }
-                    if (plateauDeJeu[l][cpt].estVide()){
-                        break;
-                    }
-                }
-            }
-            if (plateauDeJeu[l][c-1].isPionNoir()){
-                for (int cpt = c-2 ; cpt<8;cpt--){
-                    if (plateauDeJeu[l][cpt].isPionBlanc()){
-                        return true;
-                    }
-                    if (plateauDeJeu[l][cpt].estVide()){
-                        break;
-                    }
-                }
+        // voisin droit
+        if (plateauDeJeu[l][c+1].isPionNoir()){
+            if (verificationDirectionnel(l,c,0,1, "Blanc")){
+
             }
         }
 
+
+        // voisin gauche
 
         // vérification vertical
 
@@ -94,6 +79,10 @@ public class Plateau {
 
         // vérification diagonal
 
+
+
+
+        //
 
         return false;
     }
@@ -104,7 +93,24 @@ public class Plateau {
         return false;
     }
 
-
+    public boolean verificationDirectionnel(int ligneJoue, int colonneJoue,int incrementationligne, int incrementationColonne, String joueurCourant){
+        int departLigne = ligneJoue + incrementationligne ;
+        int departColonne = colonneJoue +  incrementationColonne ;
+        for (int i = departLigne ; i < 8 && i>0 ; i+=incrementationligne     ){
+            for(int j = departColonne ; j<8 && j>0 ; j+=incrementationColonne){
+                if (plateauDeJeu[i][j].estVide()){
+                    return false;
+                }
+                if (plateauDeJeu[i][j].isPionNoir() && joueurCourant.equals("Noir") ){
+                    return true ;
+                }
+                if (plateauDeJeu[i][j].isPionBlanc() && joueurCourant.equals("Blanc") ){
+                    return true ;
+                }
+            }
+        }
+        return false ;
+    }
 
 
 
