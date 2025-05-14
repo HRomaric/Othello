@@ -63,26 +63,33 @@ public class Plateau {
     }
 
     public boolean coupPourBlanc(int l, int c){
-        // voisin droit
-        if (plateauDeJeu[l][c+1].isPionNoir()){
-            if (verificationDirectionnel(l,c,0,1, "Blanc")){
-
+        // voisin droit et diagonale sens droit
+        if (c<7){
+            if (plateauDeJeu[l][c+1].isPionNoir() && verificationDirectionnel(l,c,0,1, "Blanc")){
+                return true ;
             }
         }
 
+        // voisin gauche et diagonale sens gauche
+        if (c>0){
+            if (plateauDeJeu[l][c-1].isPionNoir() && verificationDirectionnel(l,c,0,-1, "Blanc")){
+                return true ;
+            }
+        }
 
-        // voisin gauche
+        // voisin haut
+        if (l>0){
+            if (plateauDeJeu[l-1][c].isPionNoir() && verificationDirectionnel(l,c,-1,0, "Blanc")){
+                return true ;
+            }
+        }
 
-        // vérification vertical
-
-
-
-        // vérification diagonal
-
-
-
-
-        //
+        // voisin bas
+        if (l<7){
+            if (plateauDeJeu[l+1][c].isPionNoir() && verificationDirectionnel(l,c,1,0, "Blanc")){
+                return true ;
+            }
+        }
 
         return false;
     }
@@ -93,21 +100,22 @@ public class Plateau {
         return false;
     }
 
-    public boolean verificationDirectionnel(int ligneJoue, int colonneJoue,int incrementationligne, int incrementationColonne, String joueurCourant){
-        int departLigne = ligneJoue + incrementationligne ;
-        int departColonne = colonneJoue +  incrementationColonne ;
-        for (int i = departLigne ; i < 8 && i>0 ; i+=incrementationligne     ){
-            for(int j = departColonne ; j<8 && j>0 ; j+=incrementationColonne){
-                if (plateauDeJeu[i][j].estVide()){
-                    return false;
-                }
-                if (plateauDeJeu[i][j].isPionNoir() && joueurCourant.equals("Noir") ){
-                    return true ;
-                }
-                if (plateauDeJeu[i][j].isPionBlanc() && joueurCourant.equals("Blanc") ){
-                    return true ;
-                }
+    public boolean verificationDirectionnel(int ligneJoue, int colonneJoue,int incrementationLigne, int incrementationColonne, String joueurCourant){
+        int ligne = ligneJoue + incrementationLigne ;
+        int colonne = colonneJoue +  incrementationColonne ;
+
+        while (ligne < 8 && ligne>=0 && colonne < 8 && colonne>=0      ){
+            if (plateauDeJeu[ligne][colonne].estVide()){
+                return false;
             }
+            if (plateauDeJeu[ligne][colonne].isPionNoir() && joueurCourant.equals("Noir") ){
+                return true ;
+            }
+            if (plateauDeJeu[ligne][colonne].isPionBlanc() && joueurCourant.equals("Blanc") ){
+                return true ;
+            }
+            colonne+=incrementationColonne;
+            ligne+=incrementationLigne;
         }
         return false ;
     }
