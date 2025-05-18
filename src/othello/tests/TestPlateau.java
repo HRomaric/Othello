@@ -60,6 +60,12 @@ public class TestPlateau {
     }
 
 
-
-
+    @Test
+    public void testJouerCoupPlateau(){
+        // attention dans ce test, on ne vérifie pas si le coup est correcte on veut voir s'il modifie correctement le plateau
+        Plateau p = new Plateau();
+        p.jouerCoupPlateau(2,2, "Blanc");
+        //Affichage.afficher(new Etat(p,true));
+        assertTrue(p.recupererCase(2,2).isPionBlanc() && !p.recupererCase(2,2).isPionNoir()    );
+    }
 }
