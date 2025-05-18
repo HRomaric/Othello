@@ -2,9 +2,12 @@ package othello.outils;
 
 import othello.plateau.Case;
 import othello.plateau.Etat;
-import othello.plateau.Plateau;
+import java.util.Scanner;
 
 public class Affichage {
+    private static final Scanner demandeurCoup = new Scanner(System.in);
+
+
     /**
      * Procédure qui affiche un plateau
      * @param e - Etat
@@ -47,4 +50,25 @@ public class Affichage {
 
         System.out.println(sb);
     }
+
+    public static String demanderCoup(Etat etat) {
+        StringBuilder nomJoueurCourant = new StringBuilder("Joueur  ");
+        if (etat.joueurQuiJoue()){
+            nomJoueurCourant.append(" Blanc ");
+        } else {
+            nomJoueurCourant.append(" Noir ");
+        }
+        nomJoueurCourant.append("quel coup souhaitez vous jouer ? ligne colonne ");
+        System.out.println(nomJoueurCourant);
+        return demandeurCoup.nextLine();
+    }
+
+    public static void fermerDemandeurCoup() {
+        demandeurCoup.close();
+    }
+
+
+
+
+
 }
