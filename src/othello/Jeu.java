@@ -55,13 +55,7 @@ public class Jeu {
     }
 
     public boolean validationFormatCoup(String coup ){
-     if (coup.length() != 2){
-         return false;
-     }
-     if (!coup.matches("\\d\\d")){
-         return false;
-     }
-         return true;
+        return coup.matches("\\d\\d") && coup.length()==2    ;
     }
 
 }
