@@ -17,6 +17,7 @@ public class Etat {
         joueurCourant = false ;
         etatInitial = true;
         etatFinal = false;
+        successeursValide = new ArrayList<Etat>();
     }
 
     /**
@@ -29,6 +30,7 @@ public class Etat {
         etatInitial = false;
         etatFinal = false;
         this.joueurCourant = joueurCourant;
+        successeursValide = new ArrayList<Etat>();
     }
 
     /**
@@ -39,15 +41,32 @@ public class Etat {
         return new Etat(plateau, !joueurCourant);
     }
 
+
+    public void mettreAJourSuccesseurs(){
+        Etat successeursPossible ;
+        successeursValide.clear();
+        for (int ligne = 0; ligne<8 ;ligne++ ){
+            for (int colonne = 0; colonne<8; colonne++){
+                if (coupPossible(ligne,colonne)){
+                    successeursPossible = new Etat(this.plateau, this.joueurCourant);
+                    successeursPossible.jouerCoup(ligne,colonne);
+                    successeursValide.add(successeursPossible);
+                }
+            }
+        }
+    }
+
+
+
+
     public boolean coupPossible(int l, int c){
         if (l>7 || l<0 || c>7  || c<0 || !plateau.recupererCase(l,c).estVide() ){
             return false;
         }
-
         if (!joueurCourant){ //Joueur Noir
-            return plateau.coupPourNoir(l,c);
+            return plateau.coupPourJoueurCourant(l,c,"Noir");
         } else { // Joueur Blanc
-            return plateau.coupPourBlanc(l,c);
+            return plateau.coupPourJoueurCourant(l,c,"Blanc");
         }
 
     }
@@ -96,6 +115,7 @@ public class Etat {
     public void jouerCoup(int ligneJoue, int colonneJoue){
         plateau.jouerCoupPlateau(ligneJoue,colonneJoue, quiEstLeJoueurCourant());
         plateau.manger(quiEstLeJoueurCourant(),ligneJoue,colonneJoue);
+        plateau.majNbPiont();
     }
 
     public void verificationEtatFinal(){
@@ -124,4 +144,13 @@ public class Etat {
             etatFinal = true;
         }
     }
+
+    public int nbSuccesseurPossibles(){
+        return this.successeursValide.size();
+    }
+
+
+
+
+
 }
