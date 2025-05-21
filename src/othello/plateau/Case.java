@@ -6,7 +6,7 @@ public class Case {
 
 
     /**
-     * Cobstructeur de Case
+     * Constructeur de Case
      * Par défault ni noir ni blanc, "la case est vide"
      */
     public Case(){
@@ -32,7 +32,17 @@ public class Case {
         return pionBlanc;
     }
 
-
+    /**
+     * Getteur dit si le pion est blanc ou noir
+     * @return
+     */
+    public boolean isPionAdversaireCourant(String joueurCourant  ) {
+        if (joueurCourant.equals("Noir")){
+            return pionBlanc;
+        } else {
+            return pionNoir;
+        }
+    }
 
     /**
      * Setteur
