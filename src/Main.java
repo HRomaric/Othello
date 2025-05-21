@@ -6,8 +6,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import othello.fx.PlateauGraphique;
 import othello.plateau.Plateau;
+import othello.Jeu;
 
 public class Main extends Application {
+
+public class Main {
     public static void main(String[] args) {
         launch(args);
     }
@@ -25,5 +28,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 800,800);
         stage.setScene(scene);
         stage.show();
+        Jeu jeu = new Jeu();
+        jeu.partie();
     }
 }
