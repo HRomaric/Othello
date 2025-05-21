@@ -25,4 +25,15 @@ public class TestEtat {
         assertFalse(etat.estEtatFinal());
         assertNotNull(etat.getPlateau());
     }
+
+    @Test
+    public void testMettreAJourSuccesseur() {
+        Plateau plateau = new Plateau();
+        Etat etat = new Etat(plateau, false);
+        etat.mettreAJourSuccesseurs();
+        System.out.println(etat.nbSuccesseurPossibles());
+    }
+
+
+
 }
