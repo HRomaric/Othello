@@ -16,8 +16,6 @@ public class Plateau {
         majNbPiont();
     }
 
-
-
     /**
      * Getteur du tableau de case
      * @return plateauDeJeu - Case[][]
@@ -72,123 +70,63 @@ public class Plateau {
         }
     }
 
-    public boolean coupPourBlanc(int l, int c){
+
+    public boolean coupPourJoueurCourant(int l, int c, String joueurCourant){
         // voisin droit et diagonale sens droit
         if (c<7){
-            if (plateauDeJeu[l][c+1].isPionNoir() && verificationDirectionnel(l,c,0,1, "Blanc")){
+            if (plateauDeJeu[l][c+1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l,c,0,1, joueurCourant)){
                 return true ;
             }
         }
 
         // voisin gauche et diagonale sens gauche
         if (c>0){
-            if (plateauDeJeu[l][c-1].isPionNoir() && verificationDirectionnel(l,c,0,-1, "Blanc")){
+            if (plateauDeJeu[l][c-1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l,c,0,-1, joueurCourant)){
                 return true ;
             }
         }
 
         // voisin haut
         if (l>0){
-            if (plateauDeJeu[l-1][c].isPionNoir() && verificationDirectionnel(l,c,-1,0, "Blanc")){
+            if (plateauDeJeu[l-1][c].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l,c,-1,0, joueurCourant)){
                 return true ;
             }
         }
 
         // voisin bas
         if (l<7){
-            if (plateauDeJeu[l+1][c].isPionNoir() && verificationDirectionnel(l,c,1,0, "Blanc")){
+            if (plateauDeJeu[l+1][c].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l,c,1,0, joueurCourant)){
                 return true ;
             }
         }
 
         // voisin diagonal bas-droite
         if (l < 7 && c < 7) {
-            if (plateauDeJeu[l + 1][c + 1].isPionNoir() && verificationDirectionnel(l, c, 1, 1, "Blanc")) {
+            if (plateauDeJeu[l + 1][c + 1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l, c, 1, 1, joueurCourant)) {
                 return true;
             }
         }
         // voisin diagonal bas-gauche
         if (l < 7 && c > 0) {
-            if (plateauDeJeu[l + 1][c - 1].isPionNoir() && verificationDirectionnel(l, c, 1, -1, "Blanc")) {
+            if (plateauDeJeu[l + 1][c - 1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l, c, 1, -1, joueurCourant)) {
                 return true;
             }
         }
         // voisin diagonal haut-droite
         if (l > 0 && c < 7) {
-            if (plateauDeJeu[l - 1][c + 1].isPionNoir() && verificationDirectionnel(l, c, -1, 1, "Blanc")) {
+            if (plateauDeJeu[l - 1][c + 1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l, c, -1, 1, joueurCourant)) {
                 return true;
             }
         }
         // voisin diagonal haut-gauche
         if (l > 0 && c > 0) {
-            if (plateauDeJeu[l - 1][c - 1].isPionNoir() && verificationDirectionnel(l, c, -1, -1, "Blanc")) {
-                return true;
-            }
+            return plateauDeJeu[l - 1][c - 1].isPionAdversaireCourant(joueurCourant) && verificationDirectionnel(l, c, -1, -1, joueurCourant);
         }
 
         return false;
     }
 
 
-
-    public boolean coupPourNoir(int l, int c){
-        // voisin droit et diagonale sens droit
-        if (c<7){
-            if (plateauDeJeu[l][c+1].isPionBlanc() && verificationDirectionnel(l,c,0,1, "Noir")){
-                return true ;
-            }
-        }
-        // voisin gauche et diagonale sens gauche
-        if (c>0){
-            if (plateauDeJeu[l][c-1].isPionBlanc() && verificationDirectionnel(l,c,0,-1, "Noir")){
-                return true ;
-            }
-        }
-        // voisin haut
-        if (l>0){
-            if (plateauDeJeu[l-1][c].isPionBlanc() && verificationDirectionnel(l,c,-1,0, "Noir")){
-                return true ;
-            }
-        }
-        // voisin bas
-        if (l<7){
-            if (plateauDeJeu[l+1][c].isPionBlanc() && verificationDirectionnel(l,c,1,0, "Noir")){
-                return true ;
-            }
-        }
-
-        // voisin diagonal bas-droite
-        if (l < 7 && c < 7) {
-            if (plateauDeJeu[l + 1][c + 1].isPionBlanc() && verificationDirectionnel(l, c, 1, 1, "Noir")) {
-                return true;
-            }
-        }
-        // voisin diagonal bas-gauche
-        if (l < 7 && c > 0) {
-            if (plateauDeJeu[l + 1][c - 1].isPionBlanc() && verificationDirectionnel(l, c, 1, -1, "Noir")) {
-                return true;
-            }
-        }
-        // voisin diagonal haut-droite
-        if (l > 0 && c < 7) {
-            if (plateauDeJeu[l - 1][c + 1].isPionBlanc() && verificationDirectionnel(l, c, -1, 1, "Noir")) {
-                return true;
-            }
-        }
-        // voisin diagonal haut-gauche
-        if (l > 0 && c > 0) {
-            if (plateauDeJeu[l - 1][c - 1].isPionBlanc() && verificationDirectionnel(l, c, -1, -1, "Noir")) {
-                return true;
-            }
-        }
-
-
-
-
-
-
-        return false;
-    }
 
     public boolean verificationDirectionnel(int ligneJoue, int colonneJoue,int incrementationLigne, int incrementationColonne, String joueurCourant){
         int ligne = ligneJoue + incrementationLigne ;
@@ -250,7 +188,7 @@ public class Plateau {
                     mangerDirectionnel(l,c,0,1, joueurCourant);
                 }
             }
-            // voisin gauche et
+            // voisin gauche
             if (c>0){
                 if (plateauDeJeu[l][c-1].isPionNoir() && verificationDirectionnel(l,c,0,-1, "Blanc")){
                     mangerDirectionnel(l,c,0,-1, joueurCourant);
