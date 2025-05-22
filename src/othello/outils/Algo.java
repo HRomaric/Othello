@@ -4,7 +4,9 @@ import othello.plateau.Case;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
 
-public class  Algo {
+import java.util.ArrayList;
+
+public class Algo {
     private Algo(){}
 
     private double evaluation(int c, Etat e){
@@ -12,6 +14,19 @@ public class  Algo {
 
 
         }
+        if(c ==0){
+
+        }
+
+
+        ArrayList<Etat> s = new ArrayList<>(e.nbSuccesseurPossibles());
+       for (Etat successeurs : e){
+           s.add(successeurs);
+       }
+
+
+
+
 
         return 3.5;
     }

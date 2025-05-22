@@ -1,8 +1,10 @@
 package othello.plateau;
 
-import java.util.ArrayList;
 
-public class Etat {
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Etat implements Iterable<Etat> {
     private Plateau plateau; //Le plateau de jeu
     private boolean etatInitial; //dit si on est l'état initial
     private boolean etatFinal; //dit si on est un état final / échec
@@ -48,7 +50,8 @@ public class Etat {
         for (int ligne = 0; ligne<8 ;ligne++ ){
             for (int colonne = 0; colonne<8; colonne++){
                 if (coupPossible(ligne,colonne)){
-                    successeursPossible = new Etat(this.plateau, this.joueurCourant);
+                    Plateau p = new Plateau (this.plateau);
+                    successeursPossible = new Etat(p, this.joueurCourant);
                     successeursPossible.jouerCoup(ligne,colonne);
                     successeursValide.add(successeursPossible);
                 }
@@ -149,7 +152,8 @@ public class Etat {
     }
 
 
-
-
-
+    @Override
+    public Iterator<Etat> iterator() {
+        return this.successeursValide.iterator();
+    }
 }
