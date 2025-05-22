@@ -1,6 +1,7 @@
 package othello.tests;
 
 import org.junit.jupiter.api.Test;
+import othello.outils.Affichage;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
 
@@ -31,7 +32,7 @@ public class TestEtat {
         Plateau plateau = new Plateau();
         Etat etat = new Etat(plateau, false);
         etat.mettreAJourSuccesseurs();
-        System.out.println(etat.nbSuccesseurPossibles());
+        assertEquals(4, etat.nbSuccesseurPossibles(), "Erreur dans la situation de départ il y'a successeurs attendu" );
     }
 
 
