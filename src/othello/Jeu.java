@@ -19,6 +19,7 @@ public class Jeu extends SujetObserver {
     public Jeu(Scene scene){
         etatCourant = new Etat();
         this.scene = scene;
+        Affichage.afficher(etatCourant);
     }
 
     public void partie(){
@@ -102,23 +103,23 @@ public class Jeu extends SujetObserver {
                 etatCourant.verificationEtatFinal();
                 System.out.println("ça à marché " + x + y);
                 this.notifierObservateur();
+                Affichage.afficher(etatCourant);
+                etatCourant.getPlateau().majNbPiont();
+                notifierObservateur();
             }
-            else{
+            else {
                 try {
                     throw new ExceptionCoup();
-                }
-                catch (ExceptionCoup e){
+                } catch (ExceptionCoup e) {
                     e.afficherMsg();
                 }
             }
         }
         else{
             System.out.println("Il faut passer un tour");
+            scene.afficherPasseTour();
             etatCourant = etatCourant.successeur();
         }
-        Affichage.afficher(etatCourant);
-        etatCourant.getPlateau().majNbPiont();
-        notifierObservateur();
         regarderFinPartie();
     }
 
@@ -128,5 +129,9 @@ public class Jeu extends SujetObserver {
 
     public Plateau getPlateau(){
         return etatCourant.getPlateau();
+    }
+
+    public String getJoueurQuiJoue(){
+        return etatCourant.quiEstLeJoueurCourant();
     }
 }

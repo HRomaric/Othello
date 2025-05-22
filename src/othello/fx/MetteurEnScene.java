@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import othello.Jeu;
 import othello.plateau.SujetObserver;
 
-import java.util.Iterator;
-
 public class MetteurEnScene implements Scene {
     private Scene scene;
     private Jeu jeu;
@@ -97,8 +95,20 @@ public class MetteurEnScene implements Scene {
         else{
             dialog.setHeaderText("Le joueur Noire à gagné de " + nbPiontNoir + " à " + nbPiontBlanc + " !");
         }
-        dialog.setContentText("Vous allez retourner sur le menu de sélection");
+        dialog.setContentText("En fermant cette boite de dialogue vous allez retourner sur le menu de sélection");
         dialog.showAndWait();dialog.showAndWait();
         afficherMenu();
     }
+
+    @Override
+    public void afficherPasseTour() {
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("La partie est fini");
+        dialog.setHeaderText("Joueur " + jeu.getJoueurQuiJoue() + ", vous ne pouvez plus jouer de coup pour ce tour, le tour passe au joueur adverse");
+        dialog.setContentText("En fermant cette boite de dialogue vous allez retourner au jeu");
+        dialog.showAndWait();dialog.showAndWait();
+        afficherMenu();
+    }
+
+
 }
