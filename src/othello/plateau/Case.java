@@ -14,6 +14,11 @@ public class Case {
         pionBlanc = false;
     }
 
+    public Case(Case c){
+        pionNoir = c.isPionNoir();
+        pionBlanc = c.isPionBlanc();
+    }
+
 
 
     /**

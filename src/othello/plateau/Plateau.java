@@ -16,6 +16,18 @@ public class Plateau {
         majNbPiont();
     }
 
+    public Plateau(Plateau p){
+        this.plateauDeJeu = FabriquePlateau.getPlateauVide();
+        this.nbPiontNoir = p.getNbPiontNoir();
+        this.nbPiontBlanc = p.getNbPiontBlanc();
+
+        for (int ligne = 0 ; ligne < 8 ; ligne++){
+            for (int colonne = 0; colonne <8; colonne++){
+                this.plateauDeJeu[ligne][colonne] = new Case(p.recupererCase(ligne,colonne));
+            }
+        }
+    }
+
     /**
      * Getteur du tableau de case
      * @return plateauDeJeu - Case[][]
