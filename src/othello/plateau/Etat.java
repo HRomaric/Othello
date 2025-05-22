@@ -71,7 +71,6 @@ public class Etat implements Iterable<Etat> {
         } else { // Joueur Blanc
             return plateau.coupPourJoueurCourant(l,c,"Blanc");
         }
-
     }
 
     public boolean joueurQuiJoue(){
