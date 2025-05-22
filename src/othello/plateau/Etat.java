@@ -49,7 +49,6 @@ public class Etat {
         } else { // Joueur Blanc
             return plateau.coupPourBlanc(l,c);
         }
-
     }
 
     public boolean joueurQuiJoue(){
