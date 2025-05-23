@@ -12,5 +12,7 @@ public class JoueurHumain extends Joueur {
     @Override
     public void jouer() {}
 
-    public void demanderCoup(){}
+    public boolean estHumain(){
+        return true;
+    }
 }

@@ -28,6 +28,8 @@ public abstract class Joueur {
         return !couleur;
     }
 
+    public abstract boolean estHumain();
+
 
     /**
      * Procédure qui fait jouer le joueur
