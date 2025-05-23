@@ -26,7 +26,6 @@ public class PlateauGraphique extends GridPane  implements Observateur{
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 Bouton b = new Bouton(i, j);
-                b.setOnAction(e -> ((Jeu) sujetObserver).jouerIG(b.getX(), b.getY()));
                 cases[i][j] = b;
                 cases[i][j].setPrefSize(65, 65);
                 setConstraints(cases[i][j], j, i);
@@ -43,6 +42,7 @@ public class PlateauGraphique extends GridPane  implements Observateur{
                 }
             }
         }
+        this.sujetObserver.notifierObservateur();
     }
 
     public int getK(){
@@ -73,6 +73,8 @@ public class PlateauGraphique extends GridPane  implements Observateur{
 
                 if (((Jeu) sujetObserver).getJoueurCourant().estHumain()){
                     b.setOnAction(e -> ((Jeu) sujetObserver).jouerIG(b.getX(), b.getY()));
+                } else {
+                    b.setOnAction(null);
                 }
             }
         }
