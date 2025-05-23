@@ -2,6 +2,8 @@ package othello;
 
 import othello.exceptions.ExceptionCoup;
 import othello.fx.Scene;
+import othello.joueur.Joueur;
+import othello.joueur.JoueurHumain;
 import othello.outils.Affichage;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
@@ -12,13 +14,14 @@ public class Jeu extends SujetObserver {
     private Scene scene ;
 
     public Jeu(){
-        etatCourant = new Etat(); // initialisation du Jeu
+        etatCourant = new Etat(new JoueurHumain(false), new JoueurHumain(false)); // initialisation du Jeu
         partie(); //pour le jeu dans le terminal
     }
 
-    public Jeu(Scene scene){
-        etatCourant = new Etat();
+    public Jeu(Scene scene, Joueur j1, Joueur j2){
+        etatCourant = new Etat(j1, j2);
         this.scene = scene;
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNouvelle Partie\n");
         Affichage.afficher(etatCourant);
     }
 
@@ -133,5 +136,9 @@ public class Jeu extends SujetObserver {
 
     public String getJoueurQuiJoue(){
         return etatCourant.quiEstLeJoueurCourant();
+    }
+
+    public Joueur getJoueurCourant(){
+        return etatCourant.getJoueurCourant();
     }
 }

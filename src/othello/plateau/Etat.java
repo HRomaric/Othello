@@ -1,6 +1,8 @@
 package othello.plateau;
 
 
+import othello.joueur.Joueur;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,17 +11,21 @@ public class Etat implements Iterable<Etat> {
     private boolean etatInitial; //dit si on est l'état initial
     private boolean etatFinal; //dit si on est un état final / échec
     private boolean joueurCourant; // false joueurNoir true joueurBlanc
+    private Joueur joueurNoir;
+    private Joueur joueurBlanc;
     private ArrayList<Etat> successeursValide ;
 
     /**
      * Constructeur Etat initial
      */
-    public Etat(){
+    public Etat(Joueur joueurNoir, Joueur joueurBlanc) {
         plateau = new Plateau();
         joueurCourant = false ;
         etatInitial = true;
         etatFinal = false;
         successeursValide = new ArrayList<Etat>();
+        this.joueurNoir = joueurNoir;
+        this.joueurBlanc = joueurBlanc;
     }
 
     /**
@@ -27,12 +33,14 @@ public class Etat implements Iterable<Etat> {
      * @param plateau - Plateau
      * @param joueurCourant - boolean
      */
-    public Etat(Plateau plateau, boolean joueurCourant){
+    public Etat(Plateau plateau, boolean joueurCourant, Joueur joueurNoir, Joueur joueurBlanc) {
         this.plateau = plateau;
         etatInitial = false;
         etatFinal = false;
         this.joueurCourant = joueurCourant;
         successeursValide = new ArrayList<Etat>();
+        this.joueurNoir = joueurNoir;
+        this.joueurBlanc = joueurBlanc;
     }
 
     /**
@@ -40,7 +48,7 @@ public class Etat implements Iterable<Etat> {
      * @return successeur - Etat
      */
     public Etat successeur(){
-        return new Etat(plateau, !joueurCourant);
+        return new Etat(plateau, !joueurCourant, joueurNoir, joueurBlanc);
     }
 
 
@@ -51,7 +59,7 @@ public class Etat implements Iterable<Etat> {
             for (int colonne = 0; colonne<8; colonne++){
                 if (coupPossible(ligne,colonne)){
                     Plateau p = new Plateau (this.plateau);
-                    successeursPossible = new Etat(p, this.joueurCourant);
+                    successeursPossible = new Etat(p, this.joueurCourant, joueurNoir, joueurBlanc);
                     successeursPossible.jouerCoup(ligne,colonne);
                     successeursValide.add(successeursPossible);
                 }
@@ -155,5 +163,14 @@ public class Etat implements Iterable<Etat> {
     @Override
     public Iterator<Etat> iterator() {
         return this.successeursValide.iterator();
+    }
+
+    public Joueur getJoueurCourant() {
+        if (joueurCourant){
+            return joueurBlanc;
+        }
+        else{
+            return joueurNoir;
+        }
     }
 }
