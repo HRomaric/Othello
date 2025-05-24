@@ -9,7 +9,7 @@ public class ExceptionCoup extends Exception {
     public ExceptionCoup() {
         super();
         StringBuilder MessageErreur = new StringBuilder();
-        MessageErreur.append("\n\n").append("Vous devez fermez cette boite de dialogue pour revenir sur la creation du monde");
+        MessageErreur.append("\n\n").append("Vous devez fermez cette boite de dialogue pour revenir au jeu");
         this.message = MessageErreur.toString();
     }
 
