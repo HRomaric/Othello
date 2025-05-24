@@ -73,5 +73,20 @@ public class Case {
     }
 
 
+    public String toString(){
+        if (pionBlanc){
+            return "Blanc";
+        }
+        else if (pionNoir){
+            return "Noir";
+        }
+        else {
+            return "Vide";
+        }
+    }
 
+
+    public boolean egal(Case c){
+        return toString().equals(c.toString());
+    }
 }
