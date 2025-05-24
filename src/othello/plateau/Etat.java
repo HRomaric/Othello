@@ -98,6 +98,10 @@ public class Etat implements Iterable<Etat> {
         return plateau;
     }
 
+    public Case [][] getPlateauDeJeu(){
+        return plateau.getPlateauDeJeu();
+    }
+
     /**
      * Getteur du champ etatInitial
      * @return etatInitial - boolean
