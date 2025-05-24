@@ -43,6 +43,7 @@ public class PlateauGraphique extends GridPane  implements Observateur{
             }
         }
         this.sujetObserver.notifierObservateur();
+        sujetObserver.notifierObservateur2();
     }
 
     public int getK(){

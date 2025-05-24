@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 public class SujetObserver {
     private ArrayList<Observateur> observateurs;
+    private ArrayList<Observateur> observateurs2;
 
     /**
      * Constructeur de SujetObserve
      */
     public SujetObserver(){
         observateurs = new ArrayList<>();
+        observateurs2 = new ArrayList<>();
     }
 
     /**
@@ -22,11 +24,21 @@ public class SujetObserver {
         observateurs.add(v);
     }
 
+    public void ajouterObservateur2(Observateur v) {
+        observateurs2.add(v);
+    }
+
     /**
      * Permet d'informer les vues du changement du monde
      */
     public void notifierObservateur() {
         for (Observateur v : observateurs) {
+            v.reagir();
+        }
+    }
+
+    public void notifierObservateur2() {
+        for (Observateur v : observateurs2) {
             v.reagir();
         }
     }
