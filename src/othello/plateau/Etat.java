@@ -122,6 +122,15 @@ public class Etat implements Iterable<Etat> {
         }
     }
 
+    public Joueur getJoueurGagnantJoueur() {
+        if (getPlateau().getNbPiontBlanc()> getPlateau().getNbPiontNoir()){
+            return joueurBlanc;
+        } else {
+            return joueurNoir;
+        }
+    }
+
+
     public void jouerCoup(int ligneJoue, int colonneJoue){
         plateau.jouerCoupPlateau(ligneJoue,colonneJoue, quiEstLeJoueurCourant());
         plateau.manger(quiEstLeJoueurCourant(),ligneJoue,colonneJoue);
@@ -172,5 +181,10 @@ public class Etat implements Iterable<Etat> {
         else{
             return joueurNoir;
         }
+    }
+
+    public ArrayList<Etat> successeurs() {
+        mettreAJourSuccesseurs();
+        return successeursValide;
     }
 }
