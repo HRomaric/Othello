@@ -9,32 +9,52 @@ import java.util.ArrayList;
 public class Algo {
     private Algo(){}
 
-    private double evaluation(int c, Etat e){
-        if (e.estEtatFinal()){
-
-
-        }
-        if(c ==0){
-
-        }
-
-
-        ArrayList<Etat> s = new ArrayList<>(e.nbSuccesseurPossibles());
-       for (Etat successeurs : e){
-           s.add(successeurs);
+    private static int evaluation(int c, Etat e){
+        ArrayList<Etat> S = e.successeurs();
+       int score_max, score_min ;
+       if (e.estEtatFinal()){
+           if (e.getPlateau().getNbPiontBlanc() == e.getPlateau().getNbPiontNoir()){
+               return 0;
+           }
+            if (!e.getJoueurGagnantJoueur().estHumain()){
+                return Integer.MAX_VALUE;
+            } else {
+                return Integer.MIN_VALUE;
+            }
        }
+       if(c ==0){
+            return eval0(e,c);
+       }
+       if (!e.getJoueurCourant().estHumain()){
+           score_max = Integer.MIN_VALUE;
+           for (Etat successeurs : S){
+               score_max = Math.max(score_max, evaluation(c-1, successeurs));
+           }
+           return score_max;
+       } else {
+           score_min = Integer.MAX_VALUE;
+           for (Etat successeurs : S){
+               score_min = Math.min(score_min, evaluation(c-1, successeurs));
+           }
+           return score_min;
 
-
-
-
-
-        return 3.5;
+       }
     }
 
 
     public static Etat minimax (Etat e , int c ){
-
-        return null;
+        ArrayList<Etat> S = e.successeurs();
+        int score_max = Integer.MIN_VALUE ;
+        int score;
+        Etat e_sortie= null;
+        for (Etat successeurs : S){
+            score = evaluation(c, successeurs);
+            if (score > score_max){
+                score_max = score;
+                e_sortie = successeurs;
+            }
+        }
+        return e_sortie;
     }
 
     public static int eval0(Etat e, int i){
