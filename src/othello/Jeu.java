@@ -88,13 +88,13 @@ public class Jeu extends SujetObserver {
                 }
             }
             etatCourant.jouerCoup(ligneAJouer, colonneAJouer);
-            etatCourant = etatCourant.successeur();
+            etatCourant = etatCourant.successeur(ligneAJouer, colonneAJouer);
             etatCourant.verificationEtatFinal();
             System.out.println("ça à marché " + coup);
         }
         else{
             System.out.println("Il faut passer un tour");
-            etatCourant = etatCourant.successeur();
+            etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
     }
 
@@ -109,7 +109,7 @@ public class Jeu extends SujetObserver {
             if (etatCourant.coupPossible(x, y)){
                 coupPossibleJouer = true;
                 etatCourant.jouerCoup(x, y);
-                etatCourant = etatCourant.successeur();
+                etatCourant = etatCourant.successeur(x, y);
                 etatCourant.verificationEtatFinal();
                 System.out.println("ça à marché " + x + y);
                 this.notifierObservateur();
@@ -132,7 +132,7 @@ public class Jeu extends SujetObserver {
             }
             System.out.println("Il faut passer un tour");
             scene.afficherPasseTour();
-            etatCourant = etatCourant.successeur();
+            etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
         regarderFinPartie();
     }
@@ -140,24 +140,14 @@ public class Jeu extends SujetObserver {
 
     public void jouerIA(){
         if (coupPossible()){
-            Case[][] pIA = Algo.minimax(etatCourant, 5).getPlateauDeJeu();
-            Case [][] pActuel = etatCourant.getPlateauDeJeu();
-            int x = -1;
-            int y = -1;
+            Etat etatPropose = Algo.minimax(etatCourant, 5);
 
-            for (int i = 0; i < 8; i++){
-                for (int j = 0; j < 8; j++){
-                    if (!pActuel[i][j].egal(pIA[i][j])){
-                        x = i;
-                        y = j;
-                        break;
-                    }
-                }
-            }
+            int x = etatPropose.getDerniereLigneDernierCoup();
+            int y = etatPropose.getDerniereColonneDernierCoup();
 
             if (x != -1 && y != -1){
                 etatCourant.jouerCoup(x, y);
-                etatCourant = etatCourant.successeur();
+                etatCourant = etatCourant.successeur(x,y);
                 etatCourant.verificationEtatFinal();
                 System.out.println("ça à marché " + x + y);
                 this.notifierObservateur();
@@ -181,7 +171,7 @@ public class Jeu extends SujetObserver {
             }
             System.out.println("Il faut passer un tour");
             scene.afficherPasseTour();
-            etatCourant = etatCourant.successeur();
+            etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
     }
 

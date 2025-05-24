@@ -14,6 +14,7 @@ public class Etat implements Iterable<Etat> {
     private Joueur joueurNoir;
     private Joueur joueurBlanc;
     private ArrayList<Etat> successeursValide ;
+    private int[] dernierCoupJoue ;
 
     /**
      * Constructeur Etat initial
@@ -26,6 +27,9 @@ public class Etat implements Iterable<Etat> {
         successeursValide = new ArrayList<Etat>();
         this.joueurNoir = joueurNoir;
         this.joueurBlanc = joueurBlanc;
+        dernierCoupJoue = new int[2];
+        dernierCoupJoue[0] = -1;
+        dernierCoupJoue[1] = -1;
     }
 
     /**
@@ -33,7 +37,7 @@ public class Etat implements Iterable<Etat> {
      * @param plateau - Plateau
      * @param joueurCourant - boolean
      */
-    public Etat(Plateau plateau, boolean joueurCourant, Joueur joueurNoir, Joueur joueurBlanc) {
+    public Etat(Plateau plateau, boolean joueurCourant, Joueur joueurNoir, Joueur joueurBlanc, int ligneDernierCoup, int colonneDernierCoup) {
         this.plateau = plateau;
         etatInitial = false;
         etatFinal = false;
@@ -41,14 +45,17 @@ public class Etat implements Iterable<Etat> {
         successeursValide = new ArrayList<Etat>();
         this.joueurNoir = joueurNoir;
         this.joueurBlanc = joueurBlanc;
+        dernierCoupJoue = new int[2];
+        this.dernierCoupJoue[0] = ligneDernierCoup;
+        this.dernierCoupJoue[1] = colonneDernierCoup;
     }
 
     /**
      * Permet de récuperer le successeur d'un état après avoir jouer un coup
      * @return successeur - Etat
      */
-    public Etat successeur(){
-        return new Etat(plateau, !joueurCourant, joueurNoir, joueurBlanc);
+    public Etat successeur(int ligneDernierCoup, int colonneDernierCoup){
+        return new Etat(plateau, !joueurCourant, joueurNoir, joueurBlanc, ligneDernierCoup, colonneDernierCoup );
     }
 
 
@@ -59,7 +66,7 @@ public class Etat implements Iterable<Etat> {
             for (int colonne = 0; colonne<8; colonne++){
                 if (coupPossible(ligne,colonne)){
                     Plateau p = new Plateau (this.plateau);
-                    successeursPossible = new Etat(p, this.joueurCourant, joueurNoir, joueurBlanc);
+                    successeursPossible = new Etat(p, this.joueurCourant, joueurNoir, joueurBlanc, ligne,colonne);
                     successeursPossible.jouerCoup(ligne,colonne);
                     successeursValide.add(successeursPossible);
                 }
@@ -191,4 +198,14 @@ public class Etat implements Iterable<Etat> {
         mettreAJourSuccesseurs();
         return successeursValide;
     }
+
+    public int getDerniereLigneDernierCoup() {
+        return dernierCoupJoue[0];
+    }
+
+    public int getDerniereColonneDernierCoup() {
+        return dernierCoupJoue[1];
+    }
+
+
 }
