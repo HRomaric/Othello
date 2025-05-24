@@ -46,10 +46,10 @@ public class Algo {
         ArrayList<Etat> S = e.successeurs();
         int score_max = Integer.MIN_VALUE ;
         int score;
-        Etat e_sortie= null;
+        Etat e_sortie = null;
         for (Etat successeurs : S){
             score = evaluation(c, successeurs);
-            if (score > score_max){
+            if (score >= score_max){
                 score_max = score;
                 e_sortie = successeurs;
             }
