@@ -10,7 +10,7 @@ public class TestAffichage {
     @Test
     public void testAffichage() {
         Plateau plateau = new Plateau();
-        Etat etat = new Etat(plateau, true,new JoueurHumain(false), new JoueurHumain(true));
+        Etat etat = new Etat(plateau, true,new JoueurHumain(false), new JoueurHumain(true),1,1 );
         Affichage.afficher(etat);
     }
 }

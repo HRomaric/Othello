@@ -21,7 +21,7 @@ public class TestEtat {
     @Test
     public void testConstructeur2() {
         Plateau plateau = new Plateau();
-        Etat etat = new Etat(plateau, true, new JoueurHumain(true), new JoueurHumain(false));
+        Etat etat = new Etat(plateau, true, new JoueurHumain(true), new JoueurHumain(false),1,1);
 
         assertFalse(etat.getEtatInitial());
         assertFalse(etat.estEtatFinal());
@@ -31,7 +31,7 @@ public class TestEtat {
     @Test
     public void testMettreAJourSuccesseur() {
         Plateau plateau = new Plateau();
-        Etat etat = new Etat(plateau, false, new JoueurHumain(false), new JoueurHumain(true));
+        Etat etat = new Etat(plateau, false, new JoueurHumain(false), new JoueurHumain(true),1,1);
         etat.mettreAJourSuccesseurs();
         assertEquals(4, etat.nbSuccesseurPossibles(), "Erreur dans la situation de départ il y'a successeurs attendu" );
     }
