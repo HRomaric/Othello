@@ -35,4 +35,13 @@ public abstract class Joueur {
      * Procédure qui fait jouer le joueur
      */
     public abstract void jouer();
+
+    public String getCouleur() {
+        if (couleur){
+            return "Blanc";
+        }
+        else{
+            return "Noir";
+        }
+    }
 }
