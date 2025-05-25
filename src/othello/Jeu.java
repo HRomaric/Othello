@@ -8,7 +8,6 @@ import othello.joueur.JoueurHumain;
 import othello.joueur.JoueurIA;
 import othello.outils.Affichage;
 import othello.outils.Algo;
-import othello.plateau.Case;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
 import othello.plateau.SujetObserver;
@@ -46,7 +45,7 @@ public class Jeu extends SujetObserver {
     }
 
     public void regarderFinPartie(){
-        etatCourant.verificationEtatFinal();
+        //etatCourant.verificationEtatFinal();
         if (etatCourant.estEtatFinal()){
             setFinPartie();
         }
@@ -104,64 +103,41 @@ public class Jeu extends SujetObserver {
 
 
     public void jouerIG(int x, int y){
-        if (coupPossible()){
-            boolean coupPossibleJouer = false;
-            if (etatCourant.coupPossible(x, y)){
-                coupPossibleJouer = true;
-                etatCourant.jouerCoup(x, y);
-                etatCourant = etatCourant.successeur(x, y);
-                etatCourant.verificationEtatFinal();
-                System.out.println("ça à marché " + x + y);
-                Affichage.afficher(etatCourant);
-                notifierObservateur();
-            }
-            else {
-                try {
-                    throw new ExceptionCoup();
-                } catch (ExceptionCoup e) {
-                    e.afficherMsg();
-                }
-            }
+        if (etatCourant.coupPossible(x, y)){
+            etatCourant.jouerCoup(x, y);
+            etatCourant = etatCourant.successeur(x, y);
+            etatCourant.verificationEtatFinal();
+            System.out.println("ça à marché " + x + y);
+            Affichage.afficher(etatCourant);
+            notifierObservateur();
         }
-        else{
+        else {
             try {
-                throw new PasserTour();
-            } catch (PasserTour e) {
+                throw new ExceptionCoup();
+            } catch (ExceptionCoup e) {
                 e.afficherMsg();
             }
-            System.out.println("Il faut passer un tour");
-            scene.afficherPasseTour();
-            etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
-        regarderFinPartie();
         notifierObservateur2();
     }
 
 
     public void jouerIA(){
-        if (coupPossible()){
-            Etat etatPropose = Algo.minimax(etatCourant, 5);
+        assert coupPossible();
+        Etat etatPropose = Algo.minimax(etatCourant, 5);
 
-            int x = etatPropose.getDerniereLigneDernierCoup();
-            int y = etatPropose.getDerniereColonneDernierCoup();
+        int x = etatPropose.getDerniereLigneDernierCoup();
+        int y = etatPropose.getDerniereColonneDernierCoup();
 
-            if (x != -1 && y != -1){
-                etatCourant.jouerCoup(x, y);
-                etatCourant = etatCourant.successeur(x,y);
-                etatCourant.verificationEtatFinal();
-                System.out.println("ça à marché " + x + y);
-                this.notifierObservateur();
-                Affichage.afficher(etatCourant);
-                etatCourant.getPlateau().majNbPiont();
-                notifierObservateur();
-            }
-            else{
-                try {
-                    throw new PasserTour();
-                } catch (PasserTour e) {
-                    e.afficherMsg2();
-                }
-            }
+        if (x != -1 && y != -1){
+            etatCourant.jouerCoup(x, y);
+            etatCourant = etatCourant.successeur(x,y);
+            etatCourant.verificationEtatFinal();
+            System.out.println("ça à marché " + x + y);
+            this.notifierObservateur();
+            Affichage.afficher(etatCourant);
+            etatCourant.getPlateau().majNbPiont();
+            notifierObservateur();
         }
         else{
             try {
@@ -169,13 +145,12 @@ public class Jeu extends SujetObserver {
             } catch (PasserTour e) {
                 e.afficherMsg2();
             }
-            System.out.println("Il faut passer un tour");
-            scene.afficherPasseTour();
-            etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
     }
 
-
+    public Scene getScene() {
+        return scene;
+    }
 
     public Etat getEtatCourant(){
         return etatCourant;
@@ -191,5 +166,15 @@ public class Jeu extends SujetObserver {
 
     public Joueur getJoueurCourant(){
         return etatCourant.getJoueurCourant();
+    }
+
+    public void passerTour(){
+        scene.afficherPasseTour();
+        etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
+        notifierObservateur();
+    }
+
+    public void setEtatCourant(Etat etatCourant) {
+        this.etatCourant = etatCourant;
     }
 }

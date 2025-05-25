@@ -96,7 +96,7 @@ public class MetteurEnScene implements Scene {
             afficherPartie();
         });
 
-        Button menu = new Button("Retour menu selction");
+        Button menu = new Button("Retour menu selection");
         menu.setOnAction(e -> {
             afficherMenu();
         });
@@ -135,7 +135,7 @@ public class MetteurEnScene implements Scene {
             dialog.setHeaderText("Le joueur Noire à gagné de " + nbPiontNoir + " à " + nbPiontBlanc + " !");
         }
         dialog.setContentText("En fermant cette boite de dialogue vous allez retourner sur le menu de sélection");
-        dialog.showAndWait();dialog.showAndWait();
+        dialog.showAndWait();
         afficherMenu();
     }
 
@@ -145,11 +145,10 @@ public class MetteurEnScene implements Scene {
     @Override
     public void afficherPasseTour() {
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.setTitle("La partie est fini");
+        dialog.setTitle("Il faut passer le tour");
         dialog.setHeaderText("Joueur " + jeu.getJoueurQuiJoue() + ", vous ne pouvez plus jouer de coup pour ce tour, le tour passe au joueur adverse");
         dialog.setContentText("En fermant cette boite de dialogue vous allez retourner au jeu");
-        dialog.showAndWait();dialog.showAndWait();
-        afficherMenu();
+        dialog.showAndWait();
     }
 
 

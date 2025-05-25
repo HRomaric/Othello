@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import othello.Jeu;
+import othello.exceptions.PasserTour;
 import othello.plateau.Case;
 import othello.plateau.Plateau;
 import othello.plateau.SujetObserver;
@@ -52,7 +53,13 @@ public class PlateauGraphique extends GridPane  implements Observateur{
 
     @Override
     public void reagir() {
-        this.plateau = ((Jeu) sujetObserver).getPlateau();
+        Jeu leJeu = (Jeu) sujetObserver;
+        this.plateau = leJeu.getPlateau();
+        leJeu.getEtatCourant().verificationEtatFinal();
+        if (!leJeu.coupPossible() && !leJeu.getEtatCourant().estEtatFinal() ){
+            System.out.println("Il faut passer un tour");
+            leJeu.passerTour();
+        }
         cases = new Bouton[dim][dim];
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
@@ -71,13 +78,15 @@ public class PlateauGraphique extends GridPane  implements Observateur{
                         b.setGraphic(new ImageView(image1));
                     }
                 }
-
-                if (((Jeu) sujetObserver).getJoueurCourant().estHumain()){
-                    b.setOnAction(e -> ((Jeu) sujetObserver).jouerIG(b.getX(), b.getY()));
+                if (leJeu.getJoueurCourant().estHumain() && !leJeu.getEtatCourant().estEtatFinal()){
+                    b.setOnAction(e -> leJeu.jouerIG(b.getX(), b.getY()));
                 } else {
                     b.setOnAction(null);
                 }
+
             }
+
         }
+        leJeu.regarderFinPartie();
     }
 }
