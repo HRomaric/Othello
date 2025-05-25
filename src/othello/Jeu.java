@@ -112,7 +112,6 @@ public class Jeu extends SujetObserver {
                 etatCourant = etatCourant.successeur(x, y);
                 etatCourant.verificationEtatFinal();
                 System.out.println("ça à marché " + x + y);
-                this.notifierObservateur();
                 Affichage.afficher(etatCourant);
                 notifierObservateur();
             }
@@ -135,6 +134,7 @@ public class Jeu extends SujetObserver {
             etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
         }
         regarderFinPartie();
+        notifierObservateur2();
     }
 
 

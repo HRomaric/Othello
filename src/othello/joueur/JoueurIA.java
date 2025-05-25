@@ -1,8 +1,11 @@
 package othello.joueur;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import othello.Jeu;
 import othello.fx.Observateur;
-import othello.outils.Algo;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class JoueurIA extends Joueur implements Observateur {
     private int strategie; //0 pour evalDiffPiont   1 pour evalPoidsPos    peut être d'autres éval plus tard
@@ -28,17 +31,22 @@ public class JoueurIA extends Joueur implements Observateur {
      */
     @Override
     public void jouer() {
-        try{
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        jeu.jouerIA();
+        Thread taskThread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Platform.runLater(() -> jeu.jouerIA());
+        });
+        taskThread.start();
+
     }
 
     @Override
     public void reagir() {
-        if (jeu.getJoueurQuiJoue().equals(getCouleur())){
+        if (jeu.getJoueurQuiJoue().equals(getCouleur())) {
             jouer();
         }
     }
