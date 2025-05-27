@@ -10,21 +10,32 @@ public class Algo {
     private Algo(){}
 
     private static int evaluation(int c, Etat e){
+        //System.out.println("Profondeur : " + c);
+        e.mettreAJourSuccesseurs();
         ArrayList<Etat> S = e.successeurs();
-       int score_max, score_min ;
+        System.out.println("################## profondeur :" + c + " ####################################");
+        for(Etat s : S ){
+            Affichage.afficher(s);
+        }
+        System.out.println("###########################################################################");
+        int score_max, score_min ;
+
        if (e.estEtatFinal()){
            if (e.getPlateau().getNbPiontBlanc() == e.getPlateau().getNbPiontNoir()){
                return 0;
            }
-            if (!e.getJoueurGagnantJoueur().estHumain()){
+           //return e.getJoueurGagnantJoueur().estHumain() ? -1000 : 1000;
+
+           if (!e.getJoueurGagnantJoueur().estHumain()){
                 return Integer.MAX_VALUE;
-            } else {
+           } else {
                 return Integer.MIN_VALUE;
-            }
+           }
        }
-       if(c ==0){
-            return eval0(e,c);
+       if (c==0){
+           return eval0(e,0);
        }
+
        if (!e.getJoueurCourant().estHumain()){
            score_max = Integer.MIN_VALUE;
            for (Etat successeurs : S){
@@ -37,9 +48,11 @@ public class Algo {
                score_min = Math.min(score_min, evaluation(c-1, successeurs));
            }
            return score_min;
-
        }
     }
+
+
+
 
 
     public static Etat minimax (Etat e , int c ){
@@ -48,11 +61,13 @@ public class Algo {
         int score;
         Etat e_sortie = null;
         for (Etat successeurs : S){
+            //System.out.println("Successeurs en profondeur " + c + " : " + S.size());
             score = evaluation(c, successeurs);
             if (score >= score_max){
                 score_max = score;
                 e_sortie = successeurs;
             }
+            System.out.println("Score évalué: " + score);
         }
         return e_sortie;
     }

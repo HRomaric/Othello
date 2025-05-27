@@ -30,6 +30,7 @@ public class Etat implements Iterable<Etat> {
         dernierCoupJoue = new int[2];
         dernierCoupJoue[0] = -1;
         dernierCoupJoue[1] = -1;
+        mettreAJourSuccesseurs();
     }
 
     /**
@@ -55,7 +56,7 @@ public class Etat implements Iterable<Etat> {
      * @return successeur - Etat
      */
     public Etat successeur(int ligneDernierCoup, int colonneDernierCoup){
-        return new Etat(plateau, !joueurCourant, joueurNoir, joueurBlanc, ligneDernierCoup, colonneDernierCoup );
+        return new Etat(plateau, joueurCourant, joueurNoir, joueurBlanc, ligneDernierCoup, colonneDernierCoup );
     }
 
 
@@ -146,6 +147,7 @@ public class Etat implements Iterable<Etat> {
         plateau.jouerCoupPlateau(ligneJoue,colonneJoue, quiEstLeJoueurCourant());
         plateau.manger(quiEstLeJoueurCourant(),ligneJoue,colonneJoue);
         plateau.majNbPiont();
+        this.joueurCourant = !this.joueurCourant;
     }
 
     public void verificationEtatFinal(){
@@ -207,5 +209,8 @@ public class Etat implements Iterable<Etat> {
         return dernierCoupJoue[1];
     }
 
+    public Etat passerTour() {
+        return new Etat(new Plateau(this.plateau), !joueurCourant, joueurNoir, joueurBlanc, -1, -1);
+    }
 
 }

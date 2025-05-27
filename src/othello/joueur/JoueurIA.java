@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import othello.Jeu;
 import othello.fx.Observateur;
+import othello.outils.Affichage;
 import othello.plateau.Etat;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +33,17 @@ public class JoueurIA extends Joueur implements Observateur {
      */
     @Override
     public void jouer() {
+        Etat etatCourant = jeu.getEtatCourant();
+        etatCourant.mettreAJourSuccesseurs();
+        /*
+        System.out.println("###################### Affichage sucesseurs ###################### ");
+        for (Etat successeurs : etatCourant){
+            Affichage.afficher(successeurs);
+        }
+        System.out.println("##################################################################");
+        */
         Thread taskThread = new Thread(() -> {
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -44,7 +55,8 @@ public class JoueurIA extends Joueur implements Observateur {
             else{
                 System.out.println("Il faut passer un tour");
                 jeu.getScene().afficherPasseTour();
-                Etat etatCourant = jeu.getEtatCourant();
+                //etatCourant = jeu.getEtatCourant();
+                //System.out.println("Affichage des successeurs :");
                 jeu.setEtatCourant(etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup()));
             }
         });

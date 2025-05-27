@@ -124,7 +124,7 @@ public class Jeu extends SujetObserver {
 
     public void jouerIA(){
         assert coupPossible();
-        Etat etatPropose = Algo.minimax(etatCourant, 5);
+        Etat etatPropose = Algo.minimax(etatCourant, 2);
 
         int x = etatPropose.getDerniereLigneDernierCoup();
         int y = etatPropose.getDerniereColonneDernierCoup();
@@ -170,7 +170,7 @@ public class Jeu extends SujetObserver {
 
     public void passerTour(){
         scene.afficherPasseTour();
-        etatCourant = etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup());
+        etatCourant = etatCourant.passerTour();
         notifierObservateur();
     }
 

@@ -2,9 +2,12 @@ package othello.tests;
 
 import org.junit.jupiter.api.Test;
 import othello.joueur.JoueurHumain;
+import othello.joueur.JoueurIA;
 import othello.outils.Affichage;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +38,24 @@ public class TestEtat {
         etat.mettreAJourSuccesseurs();
         assertEquals(4, etat.nbSuccesseurPossibles(), "Erreur dans la situation de départ il y'a successeurs attendu" );
     }
+
+    @Test
+    public void testMettreAJourSuccesseur2() {
+        Plateau plateau = new Plateau();
+        Etat etat = new Etat(plateau, true, new JoueurHumain(false), new JoueurHumain(true),1,1);
+        etat.mettreAJourSuccesseurs();
+        assertEquals(4, etat.nbSuccesseurPossibles(), "Erreur dans la situation de départ il y'a successeurs attendu" );
+
+    }
+
+    @Test
+    public void testSuccesseurs() {
+        Plateau plateau = new Plateau();
+        Etat etat = new Etat(plateau, true, new JoueurHumain(false), new JoueurIA(true, 0  ),1,1);
+        etat.mettreAJourSuccesseurs();
+        ArrayList<Etat> successeurs = etat.successeurs();
+    }
+
 
 
 
