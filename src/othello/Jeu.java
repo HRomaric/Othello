@@ -8,6 +8,7 @@ import othello.joueur.JoueurHumain;
 import othello.joueur.JoueurIA;
 import othello.outils.Affichage;
 import othello.outils.Algo;
+import othello.outils.ThreadsManager;
 import othello.plateau.Etat;
 import othello.plateau.Plateau;
 import othello.plateau.SujetObserver;
@@ -53,6 +54,7 @@ public class Jeu extends SujetObserver {
 
     public void setFinPartie(){
         scene.afficherFinPartie();
+        ThreadsManager.getInstance().detruireTout();
     }
 
 
@@ -134,17 +136,9 @@ public class Jeu extends SujetObserver {
             etatCourant = etatCourant.successeur(x,y);
             etatCourant.verificationEtatFinal();
             System.out.println("ça à marché " + x + y);
-            this.notifierObservateur();
             Affichage.afficher(etatCourant);
             etatCourant.getPlateau().majNbPiont();
             notifierObservateur();
-        }
-        else{
-            try {
-                throw new PasserTour();
-            } catch (PasserTour e) {
-                e.afficherMsg2();
-            }
         }
     }
 

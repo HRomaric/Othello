@@ -1,13 +1,10 @@
 package othello.joueur;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import othello.Jeu;
 import othello.fx.Observateur;
-import othello.outils.Affichage;
+import othello.outils.ThreadsManager;
 import othello.plateau.Etat;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class JoueurIA extends Joueur implements Observateur {
     private int strategie; //0 pour evalDiffPiont   1 pour evalPoidsPos    peut être d'autres éval plus tard
@@ -60,8 +57,7 @@ public class JoueurIA extends Joueur implements Observateur {
                 jeu.setEtatCourant(etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup()));
             }
         });
-        taskThread.start();
-
+        ThreadsManager.getInstance().lancer(taskThread);
     }
 
     @Override
