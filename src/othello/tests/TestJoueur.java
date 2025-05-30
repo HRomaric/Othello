@@ -1,6 +1,7 @@
 package othello.tests;
 
 import org.junit.jupiter.api.Test;
+import othello.Jeu;
 import othello.joueur.Joueur;
 import othello.joueur.JoueurHumain;
 import static org.junit.jupiter.api.Assertions.*;

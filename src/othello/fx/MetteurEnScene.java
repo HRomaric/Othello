@@ -254,7 +254,7 @@ public class MetteurEnScene implements Scene {
 
         Button strat22 = new Button("Strat 2");
         strat22.setOnAction(e -> {
-            j2 = new JoueurIA(true, 1);
+            j2 = new JoueurIA(true,  1);
             if (j1 != null && j2 != null) {
                 this.jeu = new Jeu((Scene) this, j1, j2);
                 afficherPartie();

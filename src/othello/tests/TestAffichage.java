@@ -1,6 +1,7 @@
 package othello.tests;
 
 import org.junit.jupiter.api.Test;
+import othello.Jeu;
 import othello.joueur.JoueurHumain;
 import othello.outils.Affichage;
 import othello.plateau.Etat;

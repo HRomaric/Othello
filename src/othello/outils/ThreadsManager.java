@@ -17,7 +17,6 @@ public class ThreadsManager {
     }
 
     public void lancer(Thread thread) {
-        detruireTout();
         threads.add(thread);
         thread.start();
     }

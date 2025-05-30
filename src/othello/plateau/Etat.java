@@ -79,7 +79,7 @@ public class Etat implements Iterable<Etat> {
 
 
     public boolean coupPossible(int l, int c){
-        if (l>7 || l<0 || c>7  || c<0 || !plateau.recupererCase(l,c).estVide() ){
+        if (l>7 || l<0 || c>7  || c<0 || !plateau.recupererCase(l,c).estVide()){
             return false;
         }
         if (!joueurCourant){ //Joueur Noir
@@ -210,7 +210,20 @@ public class Etat implements Iterable<Etat> {
     }
 
     public Etat passerTour() {
+        System.out.println("Passer tour");
         return new Etat(new Plateau(this.plateau), !joueurCourant, joueurNoir, joueurBlanc, -1, -1);
     }
 
+    public boolean verifCoupPossible(){
+        boolean coupPossible = false;
+        for (int ligne = 0 ; ligne<8 && !coupPossible ; ligne++){
+            for (int colonne = 0 ; colonne<8 ; colonne++){
+                if (this.coupPossible(ligne, colonne)){
+                    coupPossible = true;
+                    break;
+                }
+            }
+        }
+        return coupPossible;
+    }
 }

@@ -15,7 +15,7 @@ public class Affichage {
     public static void afficher(Etat e) {
         StringBuilder sb = new StringBuilder();
         Case[][] p = e.getPlateau().getPlateauDeJeu();
-
+        sb.append("Joueur courant : " + e.quiEstLeJoueurCourant() + "\n");
         sb.append("#############################################\n");
         sb.append("######  1   2   3   4   5   6   7   8  ######\n");
         sb.append("#############################################\n");

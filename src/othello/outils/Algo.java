@@ -9,15 +9,10 @@ import java.util.ArrayList;
 public class Algo {
     private Algo(){}
 
-    private static int evaluation(int c, Etat e){
+    private static int evaluation(int c, Etat e, int strat){
         //System.out.println("Profondeur : " + c);
         e.mettreAJourSuccesseurs();
         ArrayList<Etat> S = e.successeurs();
-        System.out.println("################## profondeur :" + c + " ####################################");
-        for(Etat s : S ){
-            Affichage.afficher(s);
-        }
-        System.out.println("###########################################################################");
         int score_max, score_min ;
 
        if (e.estEtatFinal()){
@@ -33,19 +28,19 @@ public class Algo {
            }
        }
        if (c==0){
-           return eval0(e,0);
+           return eval0(e,strat);
        }
 
        if (!e.getJoueurCourant().estHumain()){
            score_max = Integer.MIN_VALUE;
            for (Etat successeurs : S){
-               score_max = Math.max(score_max, evaluation(c-1, successeurs));
+               score_max = Math.max(score_max, evaluation(c-1, successeurs, strat));
            }
            return score_max;
        } else {
            score_min = Integer.MAX_VALUE;
            for (Etat successeurs : S){
-               score_min = Math.min(score_min, evaluation(c-1, successeurs));
+               score_min = Math.min(score_min, evaluation(c-1, successeurs, strat));
            }
            return score_min;
        }
@@ -55,14 +50,14 @@ public class Algo {
 
 
 
-    public static Etat minimax (Etat e , int c ){
+    public static Etat minimax (Etat e , int c, int strat ){
         ArrayList<Etat> S = e.successeurs();
         int score_max = Integer.MIN_VALUE ;
         int score;
         Etat e_sortie = null;
         for (Etat successeurs : S){
             //System.out.println("Successeurs en profondeur " + c + " : " + S.size());
-            score = evaluation(c, successeurs);
+            score = evaluation(c, successeurs, strat);
             if (score >= score_max){
                 score_max = score;
                 e_sortie = successeurs;
@@ -128,8 +123,4 @@ public class Algo {
             return scoreN;
         }
     }
-
-
-
-
 }

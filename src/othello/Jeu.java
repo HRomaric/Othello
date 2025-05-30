@@ -1,11 +1,8 @@
 package othello;
 
 import othello.exceptions.ExceptionCoup;
-import othello.exceptions.PasserTour;
 import othello.fx.Scene;
-import othello.joueur.Joueur;
-import othello.joueur.JoueurHumain;
-import othello.joueur.JoueurIA;
+import othello.joueur.*;
 import othello.outils.Affichage;
 import othello.outils.Algo;
 import othello.outils.ThreadsManager;
@@ -13,7 +10,7 @@ import othello.plateau.Etat;
 import othello.plateau.Plateau;
 import othello.plateau.SujetObserver;
 
-public class Jeu extends SujetObserver {
+public class Jeu extends SujetObserver{
     private Etat etatCourant ;
     private Scene scene ;
 
@@ -28,12 +25,10 @@ public class Jeu extends SujetObserver {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNouvelle Partie\n");
         Affichage.afficher(etatCourant);
 
-        if (!j1.estHumain()){
-            ((JoueurIA) j1).ajouterJeu(this);
-        }
-        if (!j2.estHumain()){
-            ((JoueurIA) j2).ajouterJeu(this);
-        }
+        j1.ajouterJeu(this);
+        j2.ajouterJeu(this);
+
+        j1.verifTour();
     }
 
     public void partie(){
@@ -45,10 +40,13 @@ public class Jeu extends SujetObserver {
         Affichage.fermerDemandeurCoup();
     }
 
-    public void regarderFinPartie(){
-        //etatCourant.verificationEtatFinal();
+    public boolean regarderFinPartie(){
+        etatCourant.verificationEtatFinal();
         if (etatCourant.estEtatFinal()){
-            setFinPartie();
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -105,42 +103,19 @@ public class Jeu extends SujetObserver {
 
 
     public void jouerIG(int x, int y){
-        if (etatCourant.coupPossible(x, y)){
-            etatCourant.jouerCoup(x, y);
-            etatCourant = etatCourant.successeur(x, y);
-            etatCourant.verificationEtatFinal();
-            System.out.println("ça à marché " + x + y);
-            Affichage.afficher(etatCourant);
-            notifierObservateur();
+        etatCourant.jouerCoup(x, y);
+        etatCourant = etatCourant.successeur(x, y);
+        if (regarderFinPartie()){
+            setFinPartie();
         }
         else {
-            try {
-                throw new ExceptionCoup();
-            } catch (ExceptionCoup e) {
-                e.afficherMsg();
-            }
-        }
-        notifierObservateur2();
-    }
-
-
-    public void jouerIA(){
-        assert coupPossible();
-        Etat etatPropose = Algo.minimax(etatCourant, 2);
-
-        int x = etatPropose.getDerniereLigneDernierCoup();
-        int y = etatPropose.getDerniereColonneDernierCoup();
-
-        if (x != -1 && y != -1){
-            etatCourant.jouerCoup(x, y);
-            etatCourant = etatCourant.successeur(x,y);
-            etatCourant.verificationEtatFinal();
             System.out.println("ça à marché " + x + y);
             Affichage.afficher(etatCourant);
-            etatCourant.getPlateau().majNbPiont();
             notifierObservateur();
+            getJoueurCourant().verifTour();
         }
     }
+
 
     public Scene getScene() {
         return scene;
@@ -166,9 +141,23 @@ public class Jeu extends SujetObserver {
         scene.afficherPasseTour();
         etatCourant = etatCourant.passerTour();
         notifierObservateur();
+        if (!etatCourant.getJoueurCourant().estHumain()){
+            etatCourant.getJoueurCourant().verifTour();
+        }
     }
 
     public void setEtatCourant(Etat etatCourant) {
         this.etatCourant = etatCourant;
+    }
+
+    public void verifierCoupExistant(){
+        if (!coupPossible()){
+            passerTour();
+        }
+        else{
+            if (!etatCourant.getJoueurCourant().estHumain()){
+                etatCourant.getJoueurCourant().jouerIA();
+            }
+        }
     }
 }

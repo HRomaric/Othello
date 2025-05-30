@@ -3,67 +3,61 @@ package othello.joueur;
 import javafx.application.Platform;
 import othello.Jeu;
 import othello.fx.Observateur;
+import othello.outils.Affichage;
+import othello.outils.Algo;
 import othello.outils.ThreadsManager;
 import othello.plateau.Etat;
 
-public class JoueurIA extends Joueur implements Observateur {
+public class JoueurIA extends Joueur{
     private int strategie; //0 pour evalDiffPiont   1 pour evalPoidsPos    peut être d'autres éval plus tard
-    private Jeu jeu;
 
     public JoueurIA(boolean couleur, int strat){
         super(couleur);
         this.strategie = strat;
     }
 
-    public void ajouterJeu(Jeu j){
-        this.jeu = j;
-        this.jeu.ajouterObservateur2(this);
-        this.jeu.notifierObservateur2();
+    public void setJeu(Jeu j){
+        this.ajouterJeu(j);
+    }
+
+
+    @Override
+    public void jouerIA() {
+        Etat etatCourant = this.getJeu().getEtatCourant();
+        etatCourant.mettreAJourSuccesseurs();
+
+        System.out.println("###################### Affichage sucesseurs ###################### ");
+        for (Etat successeurs : etatCourant){
+            Affichage.afficher(successeurs);
+        }
+        System.out.println("##################################################################");
+
+
+        Etat etatPropose = Algo.minimax(this.getJeu().getEtatCourant(), 2, strategie);
+
+        int x = etatPropose.getDerniereLigneDernierCoup();
+        int y = etatPropose.getDerniereColonneDernierCoup();
+
+        if (x == -1 && y == -1){
+            System.out.println("Erreur IA");
+        }
+
+        Thread taskThread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Platform.runLater(() -> this.getJeu().jouerIG(x, y));
+        });
+        ThreadsManager.getInstance().lancer(taskThread);
     }
 
     public boolean estHumain(){
         return false;
     }
 
-    /**
-     * Procédure qui fait jouer le joueurIA
-     */
     @Override
-    public void jouer() {
-        Etat etatCourant = jeu.getEtatCourant();
-        etatCourant.mettreAJourSuccesseurs();
-        /*
-        System.out.println("###################### Affichage sucesseurs ###################### ");
-        for (Etat successeurs : etatCourant){
-            Affichage.afficher(successeurs);
-        }
-        System.out.println("##################################################################");
-        */
-        Thread taskThread = new Thread(() -> {
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (jeu.coupPossible()){
-                Platform.runLater(() -> jeu.jouerIA());
-            }
-            else{
-                System.out.println("Il faut passer un tour");
-                jeu.getScene().afficherPasseTour();
-                //etatCourant = jeu.getEtatCourant();
-                //System.out.println("Affichage des successeurs :");
-                jeu.setEtatCourant(etatCourant.successeur(etatCourant.getDerniereLigneDernierCoup(), etatCourant.getDerniereColonneDernierCoup()));
-            }
-        });
-        ThreadsManager.getInstance().lancer(taskThread);
-    }
-
-    @Override
-    public void reagir() {
-        if (jeu.getJoueurQuiJoue().equals(getCouleur())) {
-            jouer();
-        }
-    }
+    public void jouerHumain(int x, int y) {}
 }

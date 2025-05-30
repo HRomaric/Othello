@@ -1,8 +1,10 @@
 package othello.joueur;
 
+import othello.Jeu;
+
 public abstract class Joueur {
     private boolean couleur; // true si blanc, false si noir
-
+    private Jeu jeu;
 
     /**
      * Constructeur de Joueur
@@ -32,9 +34,22 @@ public abstract class Joueur {
 
 
     /**
-     * Procédure qui fait jouer le joueur
+     * Procédure qui fait jouer le joueur humain
      */
-    public abstract void jouer();
+    public abstract void jouerHumain(int x, int y);
+
+    /**
+     * Procédure qui fait jouer le joueur IA
+     */
+    public abstract void jouerIA();
+
+
+    public void verifTour(){
+        jeu.verifierCoupExistant();
+        if (!estHumain()){
+            jouerIA();
+        }
+    }
 
     public String getCouleur() {
         if (couleur){
@@ -43,5 +58,13 @@ public abstract class Joueur {
         else{
             return "Noir";
         }
+    }
+
+    public Jeu getJeu() {
+        return jeu;
+    }
+
+    public void ajouterJeu(Jeu jeu) {
+        this.jeu = jeu;
     }
 }
