@@ -34,7 +34,7 @@ public class Jeu extends SujetObserver{
     public void partie(){
         while (!etatCourant.estEtatFinal()){
             Affichage.afficher(etatCourant);
-            this.jouer(); //Partie sur terminal
+            //this.jouer(); //Partie sur terminal
         }
         System.out.println("Félicitation joueurs"+ etatCourant.getJoueurGagnant()  + " vous avez gagné !");
         Affichage.fermerDemandeurCoup();
@@ -69,7 +69,7 @@ public class Jeu extends SujetObserver{
         return coupPossible;
     }
 
-
+/*
     public void jouer(){
         if  (coupPossible()){
             String coup = "1111" ;
@@ -100,11 +100,17 @@ public class Jeu extends SujetObserver{
     public boolean validationFormatCoup(String coup ){
         return coup.matches("\\d\\d") && coup.length()==2    ;
     }
-
+*/
 
     public void jouerIG(int x, int y){
-        etatCourant.jouerCoup(x, y);
-        etatCourant = etatCourant.successeur(x, y);
+        Plateau copiePlateau = new Plateau(etatCourant.getPlateau());
+
+        Etat nouvelEtat = new Etat(copiePlateau, etatCourant.isJoueurCourant(), etatCourant.getJoueurNoir(), etatCourant.getJoueurBlanc(), x, y);
+
+        nouvelEtat.jouerCoup(x, y);
+
+        // 4. Remplacer l’état courant par le nouveau
+        etatCourant = nouvelEtat;
         if (regarderFinPartie()){
             setFinPartie();
         }
@@ -154,10 +160,6 @@ public class Jeu extends SujetObserver{
         if (!coupPossible()){
             passerTour();
         }
-        else{
-            if (!etatCourant.getJoueurCourant().estHumain()){
-                etatCourant.getJoueurCourant().jouerIA();
-            }
-        }
+
     }
 }

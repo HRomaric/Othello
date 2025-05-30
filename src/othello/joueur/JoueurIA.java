@@ -23,25 +23,6 @@ public class JoueurIA extends Joueur{
 
     @Override
     public void jouerIA() {
-        Etat etatCourant = this.getJeu().getEtatCourant();
-        etatCourant.mettreAJourSuccesseurs();
-
-        System.out.println("###################### Affichage sucesseurs ###################### ");
-        for (Etat successeurs : etatCourant){
-            Affichage.afficher(successeurs);
-        }
-        System.out.println("##################################################################");
-
-
-        Etat etatPropose = Algo.minimax(this.getJeu().getEtatCourant(), 2, strategie);
-
-        int x = etatPropose.getDerniereLigneDernierCoup();
-        int y = etatPropose.getDerniereColonneDernierCoup();
-
-        if (x == -1 && y == -1){
-            System.out.println("Erreur IA");
-        }
-
         Thread taskThread = new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -49,7 +30,31 @@ public class JoueurIA extends Joueur{
                 e.printStackTrace();
             }
 
-            Platform.runLater(() -> this.getJeu().jouerIG(x, y));
+            Platform.runLater(() -> {
+                Etat etatCourant = this.getJeu().getEtatCourant();
+                etatCourant.mettreAJourSuccesseurs();
+
+                /*
+                System.out.println("###################### Affichage sucesseurs ###################### ");
+                for (Etat successeurs : etatCourant){
+                    Affichage.afficher(successeurs);
+                }
+                System.out.println("##################################################################");
+                */
+                System.out.println(">>> Minimax lancé → joueur courant = " + etatCourant.quiEstLeJoueurCourant());
+
+                Etat etatPropose = Algo.minimax(this.getJeu().getEtatCourant(), 2, strategie);
+
+                int x = etatPropose.getDerniereLigneDernierCoup();
+                int y = etatPropose.getDerniereColonneDernierCoup();
+
+                if (x == -1 && y == -1){
+                    System.out.println("Erreur IA");
+                    return;
+                }
+
+                this.getJeu().jouerIG(x, y);
+            } ) ;
         });
         ThreadsManager.getInstance().lancer(taskThread);
     }

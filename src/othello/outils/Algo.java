@@ -10,8 +10,15 @@ public class Algo {
     private Algo(){}
 
     private static int evaluation(int c, Etat e, int strat){
-        //System.out.println("Profondeur : " + c);
+        System.out.println("------- Evaluation ---------- ");
+        System.out.println("Profondeur : " + c);
+        System.out.println("Joueur courant : " + e.quiEstLeJoueurCourant());
+        System.out.println("Dernier coup joué : (" + (e.getDerniereLigneDernierCoup() + 1) + ", " + (e.getDerniereColonneDernierCoup() + 1) + ")");
         e.mettreAJourSuccesseurs();
+        for (Etat successeur : e){
+            Affichage.afficher(successeur);
+        }
+
         ArrayList<Etat> S = e.successeurs();
         int score_max, score_min ;
 
@@ -34,7 +41,9 @@ public class Algo {
        if (!e.getJoueurCourant().estHumain()){
            score_max = Integer.MIN_VALUE;
            for (Etat successeurs : S){
-               score_max = Math.max(score_max, evaluation(c-1, successeurs, strat));
+               int score = evaluation(c-1, successeurs, strat);
+               score_max = Math.max(score_max, score);
+               System.out.println("  [IA] Score pour successeur (" + (successeurs.getDerniereLigneDernierCoup()+1) + "," + (successeurs.getDerniereColonneDernierCoup()+1) + ") = " + score);
            }
            return score_max;
        } else {
@@ -58,12 +67,23 @@ public class Algo {
         for (Etat successeurs : S){
             //System.out.println("Successeurs en profondeur " + c + " : " + S.size());
             score = evaluation(c, successeurs, strat);
+            System.out.println("→ Coup évalué : (" + (successeurs.getDerniereLigneDernierCoup() + 1) + "," +
+                    (successeurs.getDerniereColonneDernierCoup() + 1) +
+                    ") | Score : " + score);
+
             if (score >= score_max){
                 score_max = score;
                 e_sortie = successeurs;
             }
             System.out.println("Score évalué: " + score);
         }
+
+        System.out.println(">>> Coup choisi par l'IA : (" +
+                (e_sortie.getDerniereLigneDernierCoup() + 1) + "," +
+                (e_sortie.getDerniereColonneDernierCoup() + 1) +
+                ") avec score " + score_max);
+
+
         return e_sortie;
     }
 

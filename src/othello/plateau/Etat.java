@@ -2,6 +2,7 @@ package othello.plateau;
 
 
 import othello.joueur.Joueur;
+import othello.outils.Affichage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,14 +52,10 @@ public class Etat implements Iterable<Etat> {
         this.dernierCoupJoue[1] = colonneDernierCoup;
     }
 
-    /**
-     * Permet de récuperer le successeur d'un état après avoir jouer un coup
-     * @return successeur - Etat
-     */
-    public Etat successeur(int ligneDernierCoup, int colonneDernierCoup){
-        return new Etat(plateau, joueurCourant, joueurNoir, joueurBlanc, ligneDernierCoup, colonneDernierCoup );
-    }
 
+    public boolean isJoueurCourant() {
+        return joueurCourant;
+    }
 
     public void mettreAJourSuccesseurs(){
         Etat successeursPossible ;
@@ -67,6 +64,7 @@ public class Etat implements Iterable<Etat> {
             for (int colonne = 0; colonne<8; colonne++){
                 if (coupPossible(ligne,colonne)){
                     Plateau p = new Plateau (this.plateau);
+                    System.out.println(">>> Création d’un successeur pour : " + (this.joueurCourant ? "Blanc" : "Noir"));
                     successeursPossible = new Etat(p, this.joueurCourant, joueurNoir, joueurBlanc, ligne,colonne);
                     successeursPossible.jouerCoup(ligne,colonne);
                     successeursValide.add(successeursPossible);
@@ -144,8 +142,13 @@ public class Etat implements Iterable<Etat> {
 
 
     public void jouerCoup(int ligneJoue, int colonneJoue){
-        plateau.jouerCoupPlateau(ligneJoue,colonneJoue, quiEstLeJoueurCourant());
-        plateau.manger(quiEstLeJoueurCourant(),ligneJoue,colonneJoue);
+        boolean joueurQuiJoue = this.joueurCourant;
+
+        System.out.println(">>> Coup joué par : " + (joueurQuiJoue ? "Blanc" : "Noir"));
+        String joueur = joueurQuiJoue ? "Blanc" :"Noir" ;
+
+        plateau.jouerCoupPlateau(ligneJoue,colonneJoue,joueur );
+        plateau.manger(joueur,ligneJoue,colonneJoue);
         plateau.majNbPiont();
         this.joueurCourant = !this.joueurCourant;
     }
@@ -225,5 +228,26 @@ public class Etat implements Iterable<Etat> {
             }
         }
         return coupPossible;
+    }
+
+    public Etat successeur(int ligneDernierCoup, int colonneDernierCoup) {
+        Plateau copie = new Plateau(this.plateau);
+        Etat e = new Etat(copie, this.joueurCourant, joueurNoir, joueurBlanc, ligneDernierCoup, colonneDernierCoup);
+        e.jouerCoup(ligneDernierCoup, colonneDernierCoup);
+        return e;
+    }
+
+
+
+    public Joueur getJoueurNoir() {
+        return joueurNoir;
+    }
+
+    public Joueur getJoueurBlanc() {
+        return joueurBlanc;
+    }
+
+    public void setJoueurBlanc(Joueur joueurBlanc) {
+        this.joueurBlanc = joueurBlanc;
     }
 }

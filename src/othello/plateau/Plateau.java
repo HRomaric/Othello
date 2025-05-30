@@ -192,6 +192,9 @@ public class Plateau {
         }
     }
 
+
+
+
     public void manger(String joueurCourant, int l, int c){
         if (joueurCourant.equals("Blanc")){
             // voisin droit
