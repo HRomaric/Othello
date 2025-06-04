@@ -33,7 +33,7 @@ public class JoueurIA extends Joueur{
             Platform.runLater(() -> {
                 Etat etatCourant = this.getJeu().getEtatCourant();
                 etatCourant.mettreAJourSuccesseurs();
-
+                // log de debug
                 /*
                 System.out.println("###################### Affichage sucesseurs ###################### ");
                 for (Etat successeurs : etatCourant){
@@ -41,9 +41,9 @@ public class JoueurIA extends Joueur{
                 }
                 System.out.println("##################################################################");
                 */
-                System.out.println(">>> Minimax lancé → joueur courant = " + etatCourant.quiEstLeJoueurCourant());
+                //System.out.println(">>> Minimax lancé → joueur courant = " + etatCourant.quiEstLeJoueurCourant());
 
-                Etat etatPropose = Algo.minimax(this.getJeu().getEtatCourant(), 2, strategie);
+                Etat etatPropose = Algo.minimaxAlphaBeta(this.getJeu().getEtatCourant(), 5, strategie);
 
                 int x = etatPropose.getDerniereLigneDernierCoup();
                 int y = etatPropose.getDerniereColonneDernierCoup();
