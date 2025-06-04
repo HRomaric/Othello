@@ -146,27 +146,43 @@ géré les thread et les tué une fois qu'ils sont inutiles.
 
 \newpage
 
-
 \section{Ajout de l'algorithme MinMax}
 \subsection{Algorithme et évaluation}
+Pour implémenter l'algorithme MinMax nous nous sommes principalement référer sur les documents du cours dans un premier temps nous sommes concentrés sur l'implémentation de la fonction éval0, qui va décider selon le choix de l'utilisateur sur quel type de stratégies nous allons partir. Dans le projet à l'heure actuelle il y'a deux stratégies :
+\begin{itemize}
+    \item Le gaint de pions cette première stratégie oriente l'IA à vouloir manger le plus de pions possible.
+    \item La mobilité avec cette stratégie l'IA va plutôt privilégier certaines cases grâçe à un systèmes de pondération sur celle-ci.
+\end{itemize}
+
+Le choix de la stratégie est initialisé par le Joueur dès que le choix est réalisé, lors de l'appel de la fonction eval0 un switch va être fait selon la stratégie du joueur IA et un appel à une fonction éval0 personnalisé va être fait.
+Pour l'algorithme MinMax en lui même il s'agit d'une adaptation très fidèle fournit dans le cours en pseudo-langage.
+
+L'algorithme semblait fonctionnait correctement peut être un peu trop, en effet en profondeur 8 l'IA jouer coup sur coup le résultat des parties était que nous gagnions toujours contre-elle mais elle jouait vite, bien trop vite pour cette implémentation de l'algorithme à un tel de degret de profondeur. Après de longues sessions de débuggage il est apparu en représentant les successeurs qu'elle ne les visualiser pas correctement. En effet elle se représentait dans sa liste de successeurs à chaque fois comme le joueur courant c'est pour ça que généralement au bout de trois coups elle se voyait manger entièrement les joueurs noirs ce qui est en réalité tout sauf pratique. Après une correction plus que mérité, nous avons constaté quelque chose de bien plus terrifiant en effet quand nous arrivions en fin de partie et que le joueur humain doit passer son tour alors le jeu l'application fige ce qui est bien embêtant, pire encore les partie IA contre s'arrêtaient au bout de trois coups.
+
 \subsection{Refactorisation du code}
+
+Pour faire suite à ce que nous disions nous avons du opérer à un refactoring du code pour simplifier la logique du jeu qui empêcher toute forme d'évolutivité. Pour cela nous somme concentré sur le rôle des classes du package joueur. En effet les résponsabilité était mal partagé la classe JoueurIA permettait de jouer depuis celle ci mais la classe JoueurHumain ne faisait rien de tout ça la logique de jeu était capturé directement par l'écouteurs. Le refactoring fut plus que bénéfique pour le jeu dans sa globalité le jeu fonctionne que ce soit en IA contre Joueur(avec un bug ou deux mais très léger) et IA contre IA ou maintenant la partie se déroule totalement.
+
 \subsection{Les problèmes contre-attaques}
+
+Cepandant après une courte période de paix, coup de tonerre MinMax avait de nouveau le même problème qu'auparavant c'est à dire qu'il se représentait dans ces successeurs pouvoir jouer plusieurs coups d'affiler sauf que cepandant la façon dont nous l'avions fixer ne fonctionnait plus c'est donc en bataillant avec le débuggage que nous sommes arriver à une situation ou l'IA se représente correctement ses successeurs non pas sans ambiguité.
+
 \subsection{piste de solution}
+
+Une piste de solution pour garantir de la stabilité serait de repartir totalement de l'application terminale créer une boucle de jeu standardisé et bien fonctionnel sur sortie standard, s'assurer de sa stabilité entre les algorithmes et le jeu puis après avoir une version bien stable, passait sur une application graphique. Pourquoi cela n'a pas été fait ? Au timing ou ce sont déclaré les problèmes et les différents bugs il était impossible alors de boulverser totalement l'ordre des classes et la logique de jeu car la boucle de ne fonctionne pas de la même façon sur interface graphique que sur sortie standard. Pour éviter ce qu'il s'est passé il aurait fallut conservé un deuxième Main mais dont la partie se fait directement dans le terminal cela aurait pu être une solution le temps de stabiliser l'interface graphique avec le modèle.
 
 \newpage
 
 \section{algorithme avec élagage $\alpha$ $\beta$ }
+\subsection{Implémentation tardive de l'algorithme MinMax avec élagage  $\alpha$ $\beta$  }
+Avec le retard accumulé nous ne pensions pas avoir le temps de réaliser une implémentation de l'algorithme MinMax avec élagage, mais finalement nous l'avons fais bien que nous n'avons pas pu réaliser suffisament de tests pour le comparer avec l'algorithme MinMax classique
+nous avons pu constaté que l'IA jouait beaucoup mieux sur différentes parties, en profondeur 5, et est beaucoup plus performante au même niveau de profondeur que MinMax classique, que ce soit en terme de temps de calcul et aussi sur la pertinence des coups joués.
 
 \newpage
 
-\section{Une suite ...}
-Raison pas plus ...
-Assez bref je pense
-
-
 \section{Conclusion}
-problème conception $->$ raison + leçon tiré
-
+Pour conclure ce rapport nous sommes au regrets de nous rendre à l'évidence que nous avons pas réussit à aller au bout de ce projet malgré de bonnes intentions de notre part. Les problèmes de conceptions nous ont fait accumuler beaucoup trop de retard.
+Bien que nous n'ayons pas pu finaliser ce projet nous avons pris conscience de plusieurs choses, l'importance d'une bonne conception en effet dans un premier lieu ce n'est pas du temps perdu de bien réfléchir à comment va se piloter l'application il faut penser à tout avant de se lancer dans le développement, nous aurions du aussi au lieux de nous précipiter vers l'idée de faire une interface graphique mais nous concentré sur le fonctionnement de l'application sur sortie standard et d'attendre un certains seuil de stabilité avant de vouloir se lancer sur une interface graphique. Bien que ce projet est aujourd'hui inachevé, nous comptons bien le poursuivre jusqu'a obtenir une version tel qu'elle aurait du être rendu.
 
 
 \end{document}
