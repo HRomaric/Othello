@@ -1,0 +1,50 @@
+@startuml
+
+skinparam linetype ortho
+
+package Joueur{
+    abstract class "Joueur" as joueur
+    class "JoueurHumain" as joueurHumain
+    class "JoueurIA" as joueurIA
+
+    joueurHumain -up-> joueur
+    joueurIA -up-> joueur
+}
+
+package Outils{
+    class FabriquePlateau
+    class "Affichage" as affichage
+    class Algo
+    class ThreadsManager
+}
+
+package Plateau{
+    class "Case" as case
+    class "Plateau" as plateau
+    class "Etat" as etat
+    class SujetObserver
+
+    plateau -- "*" case
+    etat -- "1" plateau
+}
+
+package fx{
+    class Bouton
+    class MetteurEnScene implements Scene
+    interface Observateur
+    class PlateauGraphique implements Observateur
+    interface Scene
+    class Texte implements Observateur
+
+    PlateauGraphique -- "*" Bouton
+    MetteurEnScene -- "1" PlateauGraphique
+    MetteurEnScene -- "2" Texte
+}
+
+class jeu
+
+jeu --|> SujetObserver
+jeu -- "1" etat : EtatCourant
+jeu -- "1" Scene
+etat  -- "2" joueur
+@enduml

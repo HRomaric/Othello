@@ -36,7 +36,7 @@ tour\footnote{Il s'avairera que dans le futur ce ne fut pas le choix le plus jud
 
 Plusieurs algorithmes devait ensuite être implémenter pour l'IA avec différentes évaluations. 
 Nous n'avons pas eu le temps de tout faire, nous nous sommes donc arrêté à l'élagage $\alpha$$\beta$.
- La raison sera vue en détail dans la suite du document.
+La raison sera vue en détail dans la suite du document.
 
 \newpage
 
@@ -50,11 +50,28 @@ qui éxécuté le jeu sur terminal (Cf le diagramme de classe)
 \end{figure}
 
 
-AJOUTER EXPLICATION DIAGRAMME CLASSE
+Donc cette première architecture fut les bases de notre projet. Une des premières et denières
+fois qu'on a bien réfléchis avant de codé.
 
-RENTRER DETAIL ARCHI
+Elle décompose bien les différentes classe du modèle.
+Le package Joueur gère les joueur avec une classe abstraite pour pouvoir faire jouer sans
+connaitre le type du joueur entre humain et le joueur IA.
 
-\subsection{Le debut des problème}
+Le package outil possède la classe Affichage et la classe FabriquePlateau.
+La classe Affichage gère tous ce qui est relatif à l'affichage dans le terminal.
+La classe FabriquePlateau permet d'obtenir le plateau initial mais aussi différents plateau
+pour les tests.
+
+Le package Plateau gère la plus grosse partie du modèle. Avec les classes Etat, Plateau et Case.
+La classe Etat connait deux Joueur, qu'importe leur type réel. Elle sait aussi qui est le joueur
+courant parmis les deux. Elle gère aussi tous ce qui est successeur d'elle même. Elle connait également
+un plateau. La classe Plateau est là ou est décrit le plateau de jeu, elle connait le nombre de
+piont blanc et noir, et une collection à deux dimensions de Case.
+La classe case possède deux booléen : blanc et noir. Si les deux à false, la case est vide.
+Si true à l'un ou l'autre ça veut dire qu'il y a un pion à cette endroit. Le fait que ce soit des
+booléen facilite l'inversion des pion.
+
+\subsection{Le début des problèmes}
 
 Une classe Jeu piloté le tout et lancé une partie.
 Mais très vite l'architecture des joueurs perdu sons sens puisque toute les fonctionnalité
@@ -74,9 +91,12 @@ une ou plusieurs classe qui sont les sujet observé qui vont rafraichir les obse
 les vue à chacune de leur modification. Mais la relation est dans les deux sens, puisque
 les controlleurs peuvent détecter des actions de l'utilisateurs et ensuite demandé
 appliqué des modification sur le sujet observé.
-\\\\
-AJOUTER DIAGRAMME CLASSE
-\\\\
+
+\begin{figure}[h]
+    \includegraphics[scale=0.5]{othello2}
+    \caption{Deuxième diagramme de classe}
+\end{figure}
+
 Ici le sujet observé fut donc la classe Jeu, et l'observateur fut la classe PlateauGraphique.
 La classe PlateauGraphique est composé d'une grille constitué de bouton.
 Si le bouton était cliqué une demande de coup était demandé au jeu, cela ne ce faisait
@@ -126,9 +146,6 @@ géré les thread et les tué une fois qu'ils sont inutiles.
 
 \newpage
 
-\section{Une première implémentation d'une IA}
-
-\newpage
 
 \section{Ajout de l'algorithme MinMax}
 \subsection{Algorithme et évaluation}

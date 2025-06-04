@@ -1,5 +1,7 @@
 @startuml
+skinparam linetype ortho
 !include joueur.puml
 !include outils.puml
 !include plateau.puml
+etat  -- "2" joueur
 @enduml
